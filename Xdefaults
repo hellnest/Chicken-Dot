@@ -1,0 +1,102 @@
+!-[ Font Render ]-
+Xft.dpi:	96
+Xft.antialias:	true
+Xft.rgba:	rgb
+Xft.hinting:	true
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintslight
+
+!-[ Mice ]-
+Xcursor.theme:  Vanilla-DMZ
+Xcursor.size:	24
+
+!-[ URxvt General ]-
+URxvt.font: 		xft:Terminus:pixelsize=10
+URxvt.boldFont:		xft:Terminus:pixelsize=10:bold
+URxvt.scrollBar:	false
+URxvt.urgentOnBell:	true
+URxvt.internalborder:	0
+URxvt.borderless:	1
+URxvt.saveLines:	3000
+URxvt.cursorColor:	#FF0000
+URxvt.highlightColor:	#444444
+URxvt.underlinecolor:	#999999
+URxvt.cutchars:		"()*,<>[]{}|'"
+URxvt.print-pipe:	cat >/tmp/xxx
+
+!-[ URxvt Transparency ]-
+URxvt.depth:		32
+URxvt.background:	rgba:0000/0000/0000/bbbb
+URxvt.foreground:	#C7C7C7
+URxvt.shading:		80
+URxvt.fadeColor:	black
+
+!-[ URxvt - CLip ]-
+URxvt.perl-ext-common:	default,url-select,clipboard,keyboard-select
+URxvt.keysym.M-u:	perl:url-select:select_next
+URxvt.urlLauncher:	chromium-browser
+URxvt.underLineURLs:	true
+URxvt.keysym.M-Escape:	perl:keyboard-select:activate
+URxvt.keysym.M-s:	perl:keyboard-select:search
+
+!-[ The colors 0-7 are the 'normal' colors, while 8-15 are their 'bright' counterparts]-
+!!black
+*color0:	#000000
+*color8:	#999999
+!!red
+*color1:	#BD484A
+*color9:	#F55D60
+!!green
+*color2:	#66994E
+*color10:	#93DB6F
+!!yellow
+*color3:	#C4A043
+*color11:	#F0C452
+!!blue
+*color4:	#567B94
+*color12:	#7CB2D6
+!!magenta
+*color5:	#BB88DD
+*color13:	#D7AFD7
+!!cyan
+*color6:	#00BBDD
+*color14:	#0DEBFF
+!!white:
+*color7:	#C7C7C7
+*color15:	#D9D9D9
+
+!! == xscreensaver == !!
+
+! -- font settings -- !
+xscreensaver.Dialog.headingFont:xft:envy code r:medium:pixelsize=12
+xscreensaver.Dialog.bodyFont:xft::envy code r:medium:pixelsize=12
+xscreensaver.Dialog.labelFont:xft:envy code r:medium:pixelsize=12
+xscreensaver.Dialog.unameFont:xft:envy code r:medium:pixelsize=12
+xscreensaver.Dialog.buttonFont:xft:envy code r:medium:pixelsize=12
+xscreensaver.Dialog.dateFont:xft:envy code r:medium:pixelsize=12
+xscreensaver.passwd.passwdFont::xft:envy code r:medium:pixelsize=12
+
+! -- general dialog box -- !
+xscreensaver.Dialog.foreground:         #CCCCCC
+xscreensaver.Dialog.background:         #191717
+xscreensaver.Dialog.topShadowColor:     #434343
+xscreensaver.Dialog.bottomShadowColor:  #424242
+xscreensaver.Dialog.Button.foreground:  #CCCCCC
+xscreensaver.Dialog.Button.background:  #191717
+
+! -- username/password input box and date text colour -- !
+xscreensaver.Dialog.text.foreground:    #333333
+xscreensaver.Dialog.text.background:    #999999
+xscreensaver.Dialog.internalBorderWidth:24
+xscreensaver.Dialog.borderWidth:        20
+xscreensaver.Dialog.shadowThickness:    2
+
+! -- timeout bar -- !
+xscreensaver.passwd.thermometer.foreground:  #CCCCCC
+xscreensaver.passwd.thermometer.background:  #999999
+xscreensaver.passwd.thermometer.width:       8
+
+! -- datestamp format -- !
+xscreensaver.dateFormat:    %I:%M%P %a %b %d, %Y
+
+
