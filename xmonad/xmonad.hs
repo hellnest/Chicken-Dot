@@ -259,15 +259,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. shiftMask, xK_h ), sendMessage MirrorShrink)
     , ((modMask .|. shiftMask, xK_l ), sendMessage MirrorExpand)
  
-    -- mpd controls
-    , ((0 			, 0x1008ff16 ), spawn (ssh ++ "ncmpcpp prev"))
-    , ((0 			, 0x1008ff17 ), spawn (ssh ++ "ncmpcpp next"))
-    , ((0 			, 0x1008ff14 ), spawn (ssh ++ "ncmpcpp play"))
-    , ((0 			, 0x1008ff15 ), spawn (ssh ++"ncmpcpp pause"))
- 
-    -- scratchpad
-    , ((modMask , xK_grave), scratchpadSpawnAction defaultConfig  {terminal = myTerminal}) 
- 
     -- Libnotify
     , ((modMask .|.  shiftMask, xK_a ), spawn "/home/jelle/bin/notify.py")
     , ((modMask .|.  shiftMask, xK_m ), spawn "/home/jelle/Projects/Notify/mpd-notification.py")
