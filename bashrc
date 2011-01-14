@@ -94,7 +94,9 @@ alias umount='sudo umount'
 alias usb='mount /dev/sdb /mnt/usb'
 alias fm='ranger'
 alias v='vim'
-alias commit='git commit -m'
+alias gcommit='git commit -m'
+alias gpush='git push origin'
+alias gadd='git add'
 
 ##########################
 ##	Compression	##
