@@ -1,0 +1,19 @@
+Config { font         = "-*-Snap-*-*-*-*-10-*-*-*-*-*-*-u"  
+             , bgColor      = "#000000"
+             , fgColor      = "#00FFFF"
+	     , position     = Top
+             , lowerOnStart = False
+             , commands     = [ Run Network "ppp0" ["-L","0","-H","32","-l", "green", "--normal","orange","--high","red"] 40
+                              , Run Cpu ["<cpu0>/<cpu1>","-L","3","-H","50","-l","green","--normal","orange","--high","red"]   40
+                              , Run Cpu ["<cpu0>","-L","3","-H","50","-l","green","--normal","orange","--high","red"]  40
+                              , Run Memory ["-t","Mem: <usedratio>%", "-l", "green", "--normal","orange","--high","red"] 40
+			      , Run Date "%a %b %_d %H:%M" "date" 60
+                              , Run Battery ["-t","Batt: <left>"] 10
+                              , Run StdinReader
+			      , Run Com "sh" ["~/bin/pacup.sh"] "pacup" 3000
+			      , Run Com "sh" ["~/bin/gmail.sh"] "gmail" 3000 
+                              ]
+             , sepChar      = "%"
+             , alignSep     = "}{"
+	     , template = " %StdinReader% }{%cpu% <fc=#0033FF>|</fc> %battery% <fc=#0033FF>|</fc> %memory% <fc=#0033FF>|</fc> %ppp0% <fc=#0033FF>|</fc> GMail: %gmail% <fc=#0033FF>|</fc> Update: %pacup% <fc=#0033FF>|</fc> %date% "
+             }
