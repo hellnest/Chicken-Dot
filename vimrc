@@ -7,6 +7,7 @@ filetype plugin indent on
 set nobackup
 set nowritebackup
 set noswapfile
+set bs=2
 
 " search
 set nohls
@@ -36,7 +37,6 @@ set laststatus=2
 "set t_Co=256
 set background=dark
 
-
 " -[ FileTypes ]-
 " mail
 autocmd FileType mail,human set formatoptions+=t textwidth=72
@@ -56,7 +56,6 @@ autocmd FileType sh set expandtab shiftwidth=2 softtabstop=4
 " LaTeX
 autocmd Filetype tex,latex set grepprg=grep\ -nH\ $
 autocmd Filetype tex,latex let g:tex_flavor = "latex"
-
 
 " -[ Mappings ]-
 " taglist
