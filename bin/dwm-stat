@@ -1,0 +1,114 @@
+#!/bin/sh
+function netstatus {
+eth=`ifconfig|grep eth0`
+wlan=`ifconfig|grep wlan0`
+ppp=`ifconfig|grep ppp0`
+status=`ping -qc1 google.com 2> /dev/null`
+if [ -n "$status" ]; then
+    if [ `ifconfig|grep wlan0|wc -l` -ne "0" ]; then
+        link=wlan0;
+    elif [ `ifconfig|grep eth0|wc -l` -ne "0" ]; then
+        link=eth0;
+    elif [ `ifconfig|grep ppp0|wc -1` -ne "0"]; then
+	link=ppp0;
+    fi
+else
+    link=down;
+fi
+}
+
+function netspeed {
+#
+# displays download / upload speed by checking the /proc/net/dev with
+# 2 second delay
+#
+netstatus
+if [ "$link" == "down" ]; then
+    echo -e "\x02Network Down\x01"
+    exit 1
+fi
+
+old_state=$(cat /proc/net/dev | grep ${link})
+sleep 1
+new_state=$(cat /proc/net/dev | grep ${link})
+
+old_dn=`echo ${old_state/*:/} | awk -F " " '{ print $1 }'`
+new_dn=`echo ${new_state/*:/} | awk -F " " '{ print $1 }'`
+dnload=$((${new_dn} - ${old_dn}))
+
+old_up=`echo ${old_state/*:/} | awk -F " " '{ print $9 }'`
+new_up=`echo ${new_state/*:/} | awk -F " " '{ print $9 }'`
+upload=$((${new_up} - ${old_up}))
+
+d_speed=$(echo "scale=0;${dnload}/1024" | bc -lq)
+u_speed=$(echo "scale=0;${upload}/1024" | bc -lq)
+
+}
+
+function topproc {
+    echo "`ps -e -o pcpu,args --sort pcpu | tail -1| sed 's/\/.*\///g' |awk '{print $2" "$1}'`"
+}
+
+function memory {
+    USED=`free -m | awk '$1 ~ /^-/ {print $3}'`
+    TOTAL=`free -m | awk '$1 ~ /^Mem/ {print $2}'`
+    echo "100*$USED/$TOTAL" | bc
+}
+
+function diskuse {   ## Usage - diskuse {mount point}
+    USED=`df -hP|grep $1|awk '{print $5}'|sed 's/\%//'`
+    echo "$USED"
+}
+
+function mailcount {
+    m=`ls ~/mail/INBOX/new|wc -l`
+    if [ "$m" == "0" ]; then
+        echo "::"
+    else
+        echo -e ":: \x02Mail\x01::"
+    fi
+}
+function weather { ## Only print .weather if network is up. Weather.sh is run by cron
+netstatus
+
+if [  "$link" == "down" ]; then
+    echo "Weather N/A"
+    exit 1
+else
+    cat ~/.weather|head -1
+fi
+
+}    
+function batt {
+    perc=`acpi | awk '{print $4}'|sed 's/,//'`
+    state=`acpi | awk '{print $3}'`
+    if [ "$state" = "Discharging," ]; then
+        echo -e "\x02$perc\x01"
+    else
+        echo "$perc"
+    fi
+}
+
+function music {  ## Print currently playing artist
+    tmp=`mpc |grep "\[playing\]" | wc -l`
+    if [ "$tmp" == "1" ]; then
+        vis=`mpc current | awk -F "-" '{print $1}'`
+        echo ":: $vis"
+    fi
+}
+
+function date_mute {  # Print Date, Time. Highlight it all if volume is muted
+    d=`date +'%a %d %b %H:%M'`
+    vol=`amixer|head -n6|tail -n1|awk '{print $7}'`
+    if [ "$vol" = "[off]" ]; then
+        echo -e "\x02$d\x01"
+    else
+        echo "$d"
+    fi
+}
+
+while true
+do
+    xsetroot -name " $(topproc) $(music):: $(netspeed):: M $(memory) :: $(batt) :: $(date_mute) ::"
+    sleep 4
+done
