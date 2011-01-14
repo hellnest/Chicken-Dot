@@ -11,6 +11,9 @@ cowsay -f daemon $(fortune)
 ##################################
 export PATH="/usr/lib/colorgcc/bin:$PATH"
 export EDITOR="vim"
+complete -cf sudo
+complete -cf man
+
 [[ -z $BASH_COMPLETION && -r /etc/bash_completion ]] && . /etc/bash_completion
 [[ -r ~/.dircolors && -x /bin/dircolors ]] && eval $(dircolors -b ~/.dircolors)
 
@@ -93,6 +96,7 @@ alias mount='sudo mount'
 alias umount='sudo umount'
 alias usb='mount /dev/sdb /mnt/usb'
 alias fm='ranger'
+alias nano='vim'
 alias v='vim'
 alias gcommit='git commit -m'
 alias gpush='git push origin'
@@ -121,4 +125,3 @@ ex() {
       echo "'$1' is not a valid file!"
   fi
 }
-
