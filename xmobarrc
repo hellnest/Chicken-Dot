@@ -1,4 +1,4 @@
-Config { font         = "-*-Snap-*-*-*-*-10-*-*-*-*-*-*-u"  
+Config { font         = "-*-gohufont-medium-*-*-*-11-*-*-*-*-*-iso10646-*"  
              , bgColor      = "#000000"
              , fgColor      = "#00FFFF"
 	     , position     = Top

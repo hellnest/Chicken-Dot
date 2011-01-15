@@ -114,7 +114,7 @@ customPP = defaultPP {
 -- some nice colors for the prompt windows to match the dzen status bar.
 myXPConfig = defaultXPConfig                                    
     { 
-	font  = "-*-Snap-*-*-*-*-10-*-*-*-*-*-*-u" 
+	font  = "-*-gohufont-medium-*-*-*-11-*-*-*-*-*-iso10646-*" 
 	,fgColor = "#00FFFF"
 	, bgColor = "#000000"
 	, bgHLight    = "#000000"
@@ -219,7 +219,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. shiftMask, xK_c ), kill)
  
     -- opening program launcher / search engine
-    , ((modMask , xK_s ), SM.submap $ searchEngineMap $ S.promptSearchBrowser myXPConfig "firefox-nightly")
+    , ((modMask , xK_s ), SM.submap $ searchEngineMap $ S.promptSearchBrowser myXPConfig "chromium-browser")
     , ((modMask , xK_r), shellPrompt myXPConfig)
  
  
@@ -269,7 +269,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     --Programs
     , ((modMask .|.  shiftMask, xK_p ), spawn "pidgin")
     , ((modMask .|.  shiftMask, xK_r ), spawn "urxvtc -name irssi -e irssi")
-    , ((modMask .|.  shiftMask, xK_b ), spawn "firefox-nightly")
+    , ((modMask .|.  shiftMask, xK_b ), spawn "chromium-browser")
     , ((0, xK_Print), unsafeSpawn "scrot '%Y-%m-%d-%H%M_$wx$h.png' -e 'mv $f ~/screenshot/'")
  
     -- volume control
