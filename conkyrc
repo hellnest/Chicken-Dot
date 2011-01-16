@@ -1,0 +1,11 @@
+background no
+out_to_console yes
+update_interval 1
+total_run_times 0
+use_spacer none
+
+TEXT
+^i(.xbm/net_up_02.xbm) ${upspeed ppp0}/s ^i(.xbm/net_down_02.xbm) ${downspeed ppp0}/s \
+:: ^i(.xbm/battery.xbm) ${battery_short BAT0} \
+:: ^i(.xbm/envelope.xbm) ${execi 600 sh ~/.conky/gmail.sh} ${time [%a] %d-%b \
+:: ^i(.xbm/clock.xbm) %I:%M%P}
