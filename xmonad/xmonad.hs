@@ -1,199 +1,111 @@
-----------------------------------------------
--- Author: Martin Lee ( hellnest  )
--- xmonad.hs For xmonad 0.9.2
-----------------------------------------------
- 
--- Import stuff
+		---[ XMonad Configuration ]---
+		--------XMonad Ver 0.10-------
+		------------------------------ 	
+---  		Author : Martin Lee   		---
+---  	   hellnest.fuah@gmail.com		---
+--------------------------------------------
+-- main
 import XMonad
-import qualified XMonad.StackSet as W 
-import qualified Data.Map as M
-import XMonad.Util.EZConfig(additionalKeys)
 import System.Exit
-import Graphics.X11.Xlib
 import System.IO
-
+import qualified XMonad.StackSet as W
+import qualified Data.Map as M
+-- actions
+import XMonad.Actions.CycleWS
+import XMonad.Actions.WindowGo
+import XMonad.Actions.GridSelect
+import XMonad.Actions.Submap
+import qualified XMonad.Actions.Submap as SM
+import qualified XMonad.Actions.Search as S
+import XMonad.Actions.Search
+import XMonad.Actions.FloatKeys
+-- layouts
+import XMonad.Layout.Grid
+import XMonad.Layout.NoBorders
+import XMonad.Layout.Spacing
+import XMonad.Layout.PerWorkspace (onWorkspace)
+import XMonad.Layout.Reflect
 -- prompt
 import XMonad.Prompt
 import XMonad.Prompt.RunOrRaise (runOrRaisePrompt)
 import XMonad.Prompt.AppendFile (appendFilePrompt)
- 
--- actions
-import XMonad.Actions.CycleWS
-import XMonad.Actions.WindowGo (title, raiseMaybe, runOrRaise)
-import qualified XMonad.Actions.Search as S
-import XMonad.Actions.Search
-import qualified XMonad.Actions.Submap as SM
-import XMonad.Actions.GridSelect
- 
+-- hooks
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.SetWMName
+import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.ManageHelpers
 -- utils
-import XMonad.Util.Scratchpad (scratchpadSpawnAction, scratchpadManageHook, scratchpadFilterOutWorkspace)
+import XMonad.Util.EZConfig
 import XMonad.Util.Run (spawnPipe, runInTerm, safeSpawn, unsafeSpawn)
+import XMonad.Util.Font
 import qualified XMonad.Prompt 		as P
 import XMonad.Prompt.Shell
 import XMonad.Prompt
- 
- 
--- hooks
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.UrgencyHook
-import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.SetWMName
- 
--- layouts
-import XMonad.Layout.NoBorders
-import XMonad.Layout.ResizableTile
-import XMonad.Layout.Reflect
-import XMonad.Layout.IM
-import XMonad.Layout.Tabbed
-import XMonad.Layout.PerWorkspace (onWorkspace)
-import XMonad.Layout.Grid
- 
--- Data.Ratio for IM layout
-import Data.Ratio ((%))
- 
- 
--- Main --
-main = do
-        xmproc <- spawnPipe "xmobar"  -- start xmobar
-    	xmonad 	$ withUrgencyHook NoUrgencyHook $ defaultConfig
-        	{ manageHook = myManageHook
-        	, layoutHook = myLayoutHook  
-		, borderWidth = myBorderWidth
-		, normalBorderColor = myNormalBorderColor
-		, focusedBorderColor = myFocusedBorderColor
-		, keys = myKeys
-		, logHook = myLogHook xmproc
-        	, modMask = myModMask  
-        	, terminal = myTerminal
-		, workspaces = myWorkspaces
-                , focusFollowsMouse = True
-		, startupHook = setWMName "LG3D"	
-		}
- 
- 
- 
--- hooks
--- automaticly switching app to workspace 
-myManageHook :: ManageHook
-myManageHook = scratchpadManageHook (W.RationalRect 0.25 0.375 0.5 0.35) <+> ( composeAll . concat $
-                [[isFullscreen                  --> doFullFloat
-		, className =? "libreoffice-startcenter" 	--> doShift "5:doc" 
-		, className =? "Xmessage" 	--> doCenterFloat 
-		, className =? "Zenity" 	--> doCenterFloat 
-		, className =? "feh"	 	--> doCenterFloat 
-                , className =? "Gimp"           --> doShift "9:gimp"
-                , className =? "uzbl"           --> doShift "2:web"
-		, className =? "Minefield"	--> doShift "2:web"
-                , className =? "Chrome"		--> doShift "2:web"
-                , className =? "Pidgin"         --> doShift "3:chat"
-                , className =? "Skype"          --> doShift "3:chat"
-                , title	    =? "irssi"		--> doShift "4:irssi"
-		, className =? "MPlayer"	--> doShift "8:vid"
-		, className =? "VirtualBox"	--> doShift "6:virtual"
-		, className =? "Xpdfview" 	--> doShift "5:doc"]
- 		]
-                        )  <+> manageDocks
- 
---logHook
-myLogHook :: Handle -> X ()
-myLogHook h = dynamicLogWithPP $ customPP { ppOutput = hPutStrLn h }
- 
----- Looks --
----- bar
-customPP :: PP
-customPP = defaultPP { 
-     			    ppHidden = xmobarColor "#00FF00" ""
-			  , ppCurrent = xmobarColor "#FF0000" "" . wrap "[" "]"
-			  , ppUrgent = xmobarColor "#FF0000" "" . wrap "*" "*"
-                          , ppLayout = xmobarColor "#FF0000" ""
-                          , ppTitle = xmobarColor "#00FF00" "" . shorten 80
-                          , ppSep = "<fc=#0033FF> | </fc>"
-                     }
- 
--- some nice colors for the prompt windows to match the dzen status bar.
+
+-- The basics {{{
+
+myTerminal      = "urxvtc"
+myFocusFollowsMouse :: Bool
+myFocusFollowsMouse  = True
+myBorderWidth   = 1
+myModMask       = mod4Mask
+myWorkspaces    = ["1:code","2:web","3:chat","4:irssi","5:doc","6:V","7:Vid","8:GI"]
+myNormalBorderColor  = "white"
+myFocusedBorderColor = "red"
+myTXTColor 	= "#ffffff" 
+myBGColor  	= "#262626" 
+myFFGColor 	= myBGColor 
+myFBGColor 	= "#FFFEA8" 
+myVFGColor 	= "#8abfb0"
+myVBGColor 	= "#3b848c"
+myUFGColor 	= myTXTColor
+myUBGColor 	= "#d91e0d"
+myIFGColor 	= "#8abfd0"
+myIBGColor 	= myBGColor
+mySColor   	= myTXTColor
+myIconDir 	= "/home/hellnest/.xbm/"
+myFont 		= "xft:Droid Sans:size=8"
+
+-- }}}
+-- Dzen2 & Conky {{{
+
+myDzenPP h = defaultPP
+    { ppCurrent         = dzenColor myFFGColor myFBGColor . wrap (" ^fg(" ++ myFFGColor ++ ")^i(" ++ myIconDir ++ "/pacman.xbm)" ++ " ^fg(" ++ myFFGColor ++ ")") " "
+    , ppVisible         = dzenColor myVFGColor myVBGColor . wrap (" ^fg(" ++ myVFGColor ++ ")^i(" ++ myIconDir ++ "/eye_r.xbm)" ++ " ^fg(" ++ myVFGColor ++ ")") " "
+    , ppHidden          = dzenColor myTXTColor myBGColor . wrap (" ^i(" ++ myIconDir ++ "/has_win.xbm) ") " "
+    , ppHiddenNoWindows = dzenColor myTXTColor myBGColor . wrap (" ^i(" ++ myIconDir ++ "/has_win_nv.xbm) ") " "
+    , ppUrgent          = dzenColor myUFGColor myUBGColor . wrap (" ^i(" ++ myIconDir ++ "/info_03.xbm) ") " " . dzenStrip
+    , ppWsSep           = ""
+    , ppSep             = " | "
+    , ppLayout          = dzenColor myTXTColor myBGColor .
+                          (\x -> case x of
+                          "Full"            -> "^fg(" ++ myTXTColor ++ ")^i(" ++ myIconDir ++ "/full.xbm)"
+                          "Spacing 10 Grid" -> "^fg(" ++ myTXTColor ++ ")^i(" ++ myIconDir ++ "/mtall.xbm)"
+                          "Spacing 10 Tall" -> "^fg(" ++ myTXTColor ++ ")^i(" ++ myIconDir ++ "/tall.xbm)"
+                          _                 -> x
+                          )
+    , ppTitle           = (" " ++) . dzenColor myTXTColor myBGColor . dzenEscape
+    , ppOutput          = hPutStrLn h 
+    }
+
+myStatus = "dzen2 -x '0' -y '0' -h '14' -w '1000' -ta 'l' -bg '" ++ myBGColor ++ "' -fn '" ++ myFont ++ "'"
+myBottom = "conky | dzen2 -x '930' -y '0' -w '438' -h '14' -bg '" ++ myBGColor ++ "' -fg '" ++ myTXTColor ++ "' -fn '" ++ myFont ++ "'"
+
+-- XP Config
 myXPConfig = defaultXPConfig                                    
     { 
-	font  = "-*-gohufont-medium-*-*-*-11-*-*-*-*-*-iso10646-*" 
-	,fgColor = "#00FFFF"
-	, bgColor = "#000000"
-	, bgHLight    = "#000000"
-	, fgHLight    = "#FF0000"
-	, position = Top
+	 font			= "-*-gohufont-medium-*-*-*-11-*-*-*-*-*-iso10646-*" 
+	,fgColor 		= myTXTColor
+	,bgColor 		= myBGColor
+	,promptBorderWidth  	= 0
+	,height			= 16
+	,bgHLight   		= "#000000"
+	,fgHLight   		= "#FF0000"
+	,position 		= Bottom
     }
- 
---- My Theme For Tabbed layout
-myTheme = defaultTheme { decoHeight = 16
-                        , activeColor = "#a6c292"
-                        , activeBorderColor = "#a6c292"
-                        , activeTextColor = "#000000"
-                        , inactiveBorderColor = "#000000"
-                        }
- 
---LayoutHook
-myLayoutHook  =  onWorkspace "1:code" webL $ onWorkspace "3:chat" imLayout $  onWorkspace "2:web" webL $  onWorkspace "9:gimp" gimpL $ onWorkspace "6:vbox" fullL $ onWorkspace "4:irssi" fullL $ onWorkspace "8:vid" fullL $ standardLayouts
-	where
-	standardLayouts =   avoidStruts  $ (tiled |||  reflectTiled ||| Mirror tiled ||| Grid ||| Full) 
- 
-        --Layouts
-	tiled     = smartBorders (ResizableTall 1 (2/100) (1/2) [])
-        reflectTiled = (reflectHoriz tiled)
-	tabLayout = (tabbed shrinkText myTheme)
-	full 	  = noBorders Full
- 
-        --Im Layout
-        imLayout 	= avoidStruts $ smartBorders $ withIM ratio pidginRoster $ reflectHoriz $ withIM skypeRatio skypeRoster (tiled ||| reflectTiled ||| Grid) where
-                chatLayout      = tiled
-	        ratio 		= (1%9)
-                skypeRatio 	= (1%8)
-                pidginRoster    = And (ClassName "Pidgin") (Role "buddy_list")
-                skypeRoster     = (ClassName "Skype") `And` (Not (Title "Options")) `And` (Not (Role "Chats")) `And` (Not (Role "CallWindowForm"))
- 
-	--Gimp Layout
-	gimpL = avoidStruts $ smartBorders $ withIM (0.11) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.15) (Role "gimp-dock") Full 
- 
-	--Web Layout
-	webL      = avoidStruts $  tabLayout  ||| tiled ||| reflectHoriz tiled |||  full 
- 
-        --VirtualLayout
-        fullL = avoidStruts $ full
- 
- 
- 
- 
- 
--------------------------------------------------------------------------------
----- Terminal --
-myTerminal :: String
-myTerminal = "urxvtc"
- 
--------------------------------------------------------------------------------
--- Keys/Button bindings --
--- modmask
-myModMask :: KeyMask
-myModMask = mod4Mask
- 
- 
- 
--- borders
-myBorderWidth :: Dimension
-myBorderWidth = 1
---  
-myNormalBorderColor, myFocusedBorderColor :: String
-myNormalBorderColor = "#333333"
-myFocusedBorderColor = "#FF0000"
---
- 
- 
---Workspaces
-myWorkspaces :: [WorkspaceId]
-myWorkspaces = ["1:code", "2:web", "3:chat", "4:irssi", "5:doc", "6:vbox" ,"7:games", "8:vid", "9:gimp"] 
---
- 
--- Switch to the "web" workspace
-viewWeb = windows (W.greedyView "2:web")                           -- (0,0a)
---
- 
+
 --Search engines to be selected :  [google (g), wikipedia (w) , youtube (y) , maps (m), dictionary (d) , wikipedia (w), bbs (b) ,aur (r), wiki (a) , TPB (t), mininova (n), isohunt (i) ]
 --keybinding: hit mod + s + <searchengine>
 searchEngineMap method = M.fromList $
@@ -208,87 +120,181 @@ searchEngineMap method = M.fromList $
        , ((0, xK_r), method $ S.searchEngine "AUR" "http://aur.archlinux.org/packages.php?O=0&L=0&C=0&K=")
        , ((0, xK_a), method $ S.searchEngine "archwiki" "http://wiki.archlinux.org/index.php/Special:Search?search=")
        ]
- 
- 
-ssh = "ssh -i /path/to/file/.key usere@domain "
--- keys
-myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
-myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
-    -- killing programs
-    [ ((modMask, xK_Return), spawn $ XMonad.terminal conf)
-    , ((modMask .|. shiftMask, xK_c ), kill)
- 
-    -- opening program launcher / search engine
-    , ((modMask , xK_s ), SM.submap $ searchEngineMap $ S.promptSearchBrowser myXPConfig "chromium-browser")
-    , ((modMask , xK_r), shellPrompt myXPConfig)
- 
- 
-    -- GridSelect
-    , ((modMask, xK_g), goToSelected defaultGSConfig)
- 
-    -- layouts
-    , ((modMask, xK_space ), sendMessage NextLayout)
-    , ((modMask .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
-    , ((modMask, xK_b ), sendMessage ToggleStruts)
- 
-    -- floating layer stuff
-    , ((modMask, xK_t ), withFocused $ windows . W.sink)
- 
-    -- refresh'
-    , ((modMask, xK_n ), refresh)
- 
-    -- focus
-    , ((modMask, xK_Tab ), windows W.focusDown)
-    , ((modMask, xK_j ), windows W.focusDown)
-    , ((modMask, xK_k ), windows W.focusUp)
-    , ((modMask, xK_m ), windows W.focusMaster)
- 
- 
-    -- swapping
-    , ((modMask .|. shiftMask, xK_Return), windows W.swapMaster)
-    , ((modMask .|. shiftMask, xK_j ), windows W.swapDown )
-    , ((modMask .|. shiftMask, xK_k ), windows W.swapUp )
- 
-    -- increase or decrease number of windows in the master area
-    , ((modMask , xK_comma ), sendMessage (IncMasterN 1))
-    , ((modMask , xK_period), sendMessage (IncMasterN (-1)))
- 
-    -- resizing
-    , ((modMask, xK_h ), sendMessage Shrink)
-    , ((modMask, xK_l ), sendMessage Expand)
-    , ((modMask .|. shiftMask, xK_h ), sendMessage MirrorShrink)
-    , ((modMask .|. shiftMask, xK_l ), sendMessage MirrorExpand)
- 
-    -- Libnotify
-    , ((modMask .|.  shiftMask, xK_a ), spawn "/home/jelle/bin/notify.py")
-    , ((modMask .|.  shiftMask, xK_m ), spawn "/home/jelle/Projects/Notify/mpd-notification.py")
-    , ((modMask .|.  shiftMask, xK_t ), spawn "/home/jelle/Projects/Notify/todo-notification.py")
-    , ((modMask .|.  shiftMask, xK_g ), spawn "/home/jelle/bin/notify-mail.py")
-    , ((modMask .|.  shiftMask, xK_v ), spawn "/home/jelle/Projects/Notify/sound-notification.py")
 
-    --Programs
-    , ((modMask .|.  shiftMask, xK_p ), spawn "pidgin")
-    , ((modMask .|.  shiftMask, xK_r ), spawn "urxvtc -name irssi -e irssi")
-    , ((modMask .|.  shiftMask, xK_b ), spawn "chromium-browser")
-    , ((0, xK_Print), unsafeSpawn "scrot '%Y-%m-%d-%H%M_$wx$h.png' -e 'mv $f ~/screenshot/'")
+
+-- }}}
+-- Key bindings {{{
+
+myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
  
+    -- launch a terminal
+    [ ((modm, 				xK_Return), spawn $ XMonad.terminal conf)
+ 
+    -- launch dmenu
+    --, ((modm,               xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
+    , ((modm, 				xK_s 	 ), SM.submap $ searchEngineMap $ S.promptSearchBrowser myXPConfig "chromium-browser")
+    , ((modm, 				xK_r	 ), shellPrompt myXPConfig) 
+    -- close focused window
+    , ((modm .|. shiftMask, xK_c     ), kill)
+ 
+     -- Rotate through the available layout algorithms
+    , ((modm,               xK_space ), sendMessage NextLayout)
+ 
+    --  Reset the layouts on the current workspace to default
+    , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
+ 
+    -- Resize viewed windows to the correct size
+    , ((modm,               xK_n     ), refresh)
+ 
+    -- Select an application from a grid
+    , ((modm,               xK_g     ), goToSelected defaultGSConfig)
+
+    -- Move focus to the next window
+    , ((modm,               xK_Tab   ), windows W.focusDown)
+ 
+    -- Move focus to the next window
+    , ((modm,               xK_j     ), windows W.focusDown)
+ 
+    -- Move focus to the previous window
+    , ((modm,               xK_k     ), windows W.focusUp  )
+ 
+    -- Move focus to the master window
+    , ((modm,               xK_m     ), windows W.focusMaster  )
+ 
+    -- Swap the focused window and the master window
+    , ((modm .|. shiftMask, xK_Return), windows W.swapMaster)
+ 
+    -- Swap the focused window with the next window
+    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
+ 
+    -- Swap the focused window with the previous window
+    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+ 
+    -- Shrink the master area
+    , ((modm,               xK_h     ), sendMessage Shrink)
+ 
+    -- Expand the master area
+    , ((modm,               xK_l     ), sendMessage Expand)
+ 
+    -- Push window back into tiling
+    , ((modm,               xK_t     ), withFocused $ windows . W.sink)
+ 
+    -- Increment the number of windows in the master area
+    , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
+ 
+    -- Deincrement the number of windows in the master area
+    , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
+ 
+    -- Toggle the status bar gap
+    -- Use this binding with avoidStruts from Hooks.ManageDocks.
+    -- See also the statusBar function from Hooks.DynamicLog.
+    --
+    , ((modm              , xK_b     ), sendMessage ToggleStruts)
+ 
+    -- Quit xmonad
+    , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
+ 
+    -- Restart xmonad
+    , ((modm              , xK_q     ), spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
+    , ((modm              , xK_Right ), nextWS)
+    , ((modm              , xK_Left  ), prevWS)
+
     -- volume control
-    , ((0 			, 0x1008ff13 ), spawn "amixer -q set Master 2dB+")
-    , ((0 			, 0x1008ff11 ), spawn "amixer -q set Master 2dB-")
-    , ((0 			, 0x1008ff12 ), spawn "amixer -q set Master toggle")
- 
- 
-    -- quit, or restart
-    , ((modMask .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
-    , ((modMask , xK_q ), restart "xmonad" True)
-   
-    -- Workspaces
-    , ((modMask, xK_Right ), nextWS)
-    , ((modMask, xK_Left ), prevWS)]
+    , ((0		, 0x1008ff13 ), spawn "amixer -q set Master 2dB+ && amixer -q set PCM 2dB+")
+    , ((0		, 0x1008ff11 ), spawn "amixer -q set Master 2dB- && amixer -q set PCM 2dB-")
+    , ((0		, 0x1008ff12 ), spawn "amixer -q set Master toggle")
 
-  ++
-    -- mod-[1..9] %! Switch to workspace N
-    -- mod-shift-[1..9] %! Move client to workspace N
-    [((m .|. modMask, k), windows $ f i)
-        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
-        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+    -- brightness control
+    , ((0		, 0x1008ff03 ), spawn "nvclock -S -5")
+    , ((0		, 0x1008ff02 ), spawn "nvclock -S +5")
+    
+    -- Screenshot
+    , ((0		, xK_Print), unsafeSpawn "scrot '%d-%m-%Y-%H%M_$wx$h.png' -e 'mv $f ~/screenshot'")
+
+    -- Application KeyBind
+    , ((modm .|. shiftMask, xK_u     ), spawn "uzbl-tabbed")
+    , ((modm .|. shiftMask, xK_p     ), spawn "pidgin")
+    , ((modm .|. shiftMask, xK_b     ), spawn "chromium-browser")
+
+    ]
+    ++
+
+    --
+    -- mod-[1..9], Switch to workspace N
+    -- mod-shift-[1..9], Move client to workspace N
+    --
+    [ ((m .|. modm, k), windows $ f i)
+        | (i, k) <- zip (myWorkspaces) [xK_1 .. xK_8]
+        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
+    ]
+
+
+-- }}}
+-- Mouse bindings {{{
+
+myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
+    [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
+                                       >> windows W.shiftMaster))
+    , ((modm, button2), (\w -> focus w >> windows W.shiftMaster))
+    , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
+                                       >> windows W.shiftMaster))
+    ]
+
+-- }}}
+-- Hooks & Layouts {{{
+
+myLayoutHook = onWorkspace "2:web" (full ||| grid) $ onWorkspace "3:chat" (tiled ||| grid) $ onWorkspace "4:irssi" (full) standardLayouts
+  where
+    tiled 	= spacing 10 $ Tall nmaster delta ratio
+    nmaster 	= 1
+    ratio 	= 1/2
+    delta	= 3/100
+    grid 	= spacing 10 $ Grid
+    full 	= noBorders $ Full
+    standardLayouts = (tiled ||| grid ||| full)
+    reflectTiled = (reflectHoriz tiled)
+
+myManageHook = ( composeAll . concat $
+    [[ className =? "Gimp"          --> doShift "8:IMG"
+    , className =? "Zenity"         --> doCenterFloat
+    , className =? "Xmessage"       --> doCenterFloat
+    , className =? "MPlayer"        --> doCenterFloat
+    , className =? "Uzbl-tabbed"    --> doShift "2:web" 
+    , className =? "Minefield"      --> doShift "2:web"
+    , className =? "Chrome"         --> doShift "2:web"
+    , className =? "Pidgin"         --> doShift "3:chat"
+    , className =? "MPlayer"        --> doShift "7:box"
+    , resource  =? "desktop_window" --> doIgnore 
+    , resource  =? "kdesktop"       --> doIgnore]
+    ])
+
+    where
+
+        role    = stringProperty "WM_WINDOW_ROLE"
+        name    = stringProperty "WM_NAME"
+
+myLogHook = return ()
+
+-- }}}
+-- Main {{{
+
+main = do
+    dzen <- spawnPipe myStatus
+    bottom <- spawnPipe myBottom
+    xmonad $ ewmh $ withUrgencyHook NoUrgencyHook defaultConfig {
+       -- Basic Configuration
+        terminal = myTerminal
+        , focusFollowsMouse = myFocusFollowsMouse
+        , borderWidth = myBorderWidth
+        , modMask = myModMask
+        , workspaces = myWorkspaces
+        , normalBorderColor = myNormalBorderColor
+        , focusedBorderColor = myFocusedBorderColor
+        , keys = myKeys
+        , mouseBindings = myMouseBindings
+        , layoutHook = avoidStruts $ myLayoutHook
+        , manageHook = manageHook defaultConfig <+> myManageHook
+        , logHook = myLogHook >> (dynamicLogWithPP $ myDzenPP dzen) >> setWMName "LG3D"
+    }
+
+-- }}}
