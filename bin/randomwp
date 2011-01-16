@@ -6,5 +6,5 @@
 while true;
 do
 	find /sandbox/wallpaper -type f -name '*.jpg' -o -name '*.png' -o -name '*.svg' | shuf -n 1 | xargs feh --bg-scale
-	sleep 20m
+	sleep 10m
 done &
