@@ -1,9 +1,9 @@
-		---[ XMonad Configuration ]---
-		--------XMonad Ver 0.10-------
-		------------------------------ 	
----  		Author : Martin Lee   		---
----  	   hellnest.fuah@gmail.com		---
---------------------------------------------
+  ---[ XMonad Configuration ]---
+ --------XMonad Ver 0.10-------
+-----------------------------------	
+---	Author : Martin Lee   	---
+---   hellnest.fuah@gmail.com	---
+-----------------------------------
 -- main
 import XMonad
 import System.Exit
@@ -49,11 +49,11 @@ import XMonad.Prompt
 myTerminal      = "urxvtc"
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse  = True
-myBorderWidth   = 1
+myBorderWidth   = 2
 myModMask       = mod4Mask
 myWorkspaces    = ["1:code","2:web","3:chat","4:irssi","5:doc","6:V","7:Vid","8:GI"]
 myNormalBorderColor  = "white"
-myFocusedBorderColor = "red"
+myFocusedBorderColor = "#FF0000"
 myTXTColor 	= "#ffffff" 
 myBGColor  	= "#262626" 
 myFFGColor 	= myBGColor 
@@ -66,7 +66,7 @@ myIFGColor 	= "#8abfd0"
 myIBGColor 	= myBGColor
 mySColor   	= myTXTColor
 myIconDir 	= "/home/hellnest/.xbm/"
-myFont 		= "xft:Droid Sans:size=8"
+myFont 		= "-*-profont-*-*-*-*-12-*-*-*-*-*-*-*"
 
 -- }}}
 -- Dzen2 & Conky {{{
@@ -90,13 +90,13 @@ myDzenPP h = defaultPP
     , ppOutput          = hPutStrLn h 
     }
 
-myStatus = "dzen2 -x '0' -y '0' -h '14' -w '1000' -ta 'l' -bg '" ++ myBGColor ++ "' -fn '" ++ myFont ++ "'"
+myStatus = "dzen2 -x '0' -y '0' -h '14' -w '930' -ta 'l' -bg '" ++ myBGColor ++ "' -fn '" ++ myFont ++ "'"
 myBottom = "conky | dzen2 -x '930' -y '0' -w '438' -h '14' -bg '" ++ myBGColor ++ "' -fg '" ++ myTXTColor ++ "' -fn '" ++ myFont ++ "'"
 
 -- XP Config
 myXPConfig = defaultXPConfig                                    
     { 
-	 font			= "-*-gohufont-medium-*-*-*-11-*-*-*-*-*-iso10646-*" 
+	 font			= "-*-profont-*-*-*-*-10-*-*-*-*-*-*-*" 
 	,fgColor 		= myTXTColor
 	,bgColor 		= myBGColor
 	,promptBorderWidth  	= 0
@@ -132,12 +132,17 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
  
     -- launch dmenu
     --, ((modm,               xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
-    , ((modm, 				xK_s 	 ), SM.submap $ searchEngineMap $ S.promptSearchBrowser myXPConfig "chromium-browser")
-    , ((modm, 				xK_r	 ), shellPrompt myXPConfig) 
+    , ((modm, 				xK_s 	 ), SM.submap $ searchEngineMap $ S.promptSearchBrowser myXPConfig "uzbl-tabbed")
+    , ((modm, 				xK_r	 ), shellPrompt myXPConfig)
+    , ((0,					xK_F12	 ), appendFilePrompt myXPConfig "/home/hellnest/chicken-TODO") 
+    
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
  
-     -- Rotate through the available layout algorithms
+    -- Focus Urgent
+    , ((modm,		    xK_Escape), focusUrgent)
+
+    -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
  
     --  Reset the layouts on the current workspace to default
@@ -215,6 +220,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_u     ), spawn "uzbl-tabbed")
     , ((modm .|. shiftMask, xK_p     ), spawn "pidgin")
     , ((modm .|. shiftMask, xK_b     ), spawn "chromium-browser")
+    , ((modm .|. shiftMask, xK_r     ), spawn "urxvtc -name irssi -e irssi")
 
     ]
     ++
@@ -255,7 +261,7 @@ myLayoutHook = onWorkspace "2:web" (full ||| grid) $ onWorkspace "3:chat" (tiled
     reflectTiled = (reflectHoriz tiled)
 
 myManageHook = ( composeAll . concat $
-    [[ className =? "Gimp"          --> doShift "8:IMG"
+    [[ className =? "Gimp"          --> doShift "8:GI"
     , className =? "Zenity"         --> doCenterFloat
     , className =? "Xmessage"       --> doCenterFloat
     , className =? "MPlayer"        --> doCenterFloat
@@ -263,7 +269,8 @@ myManageHook = ( composeAll . concat $
     , className =? "Minefield"      --> doShift "2:web"
     , className =? "Chrome"         --> doShift "2:web"
     , className =? "Pidgin"         --> doShift "3:chat"
-    , className =? "MPlayer"        --> doShift "7:box"
+    , title	=? "irssi"	    --> doShift "4:irssi"
+    , className =? "MPlayer"        --> doShift "7:Vid"
     , resource  =? "desktop_window" --> doIgnore 
     , resource  =? "kdesktop"       --> doIgnore]
     ])
@@ -278,6 +285,7 @@ myLogHook = return ()
 -- }}}
 -- Main {{{
 
+main :: IO ()
 main = do
     dzen <- spawnPipe myStatus
     bottom <- spawnPipe myBottom
