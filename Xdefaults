@@ -3,7 +3,6 @@ Xft.dpi:	96
 Xft.antialias:	true
 Xft.rgba:	rgb
 Xft.hinting:	true
-Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintslight
 
 !-[ Mice ]-
@@ -11,23 +10,23 @@ Xcursor.theme:  Vanilla-DMZ
 Xcursor.size:	24
 
 !-[ URxvt General ]-
-URxvt.font: 		-*-gohufont-medium-*-*-*-11-*-*-*-*-*-iso10646-*
-URxvt.boldFont:         -*-gohufont-bold-*-*-*-11-*-*-*-*-*-iso10646-*	
+URxvt.font:		-*-profont-*-*-*-*-12-*-*-*-*-*-*-*
+URxvt.Bold.font:	-*-profont-*-*-*-*-12-*-*-*-*-*-*-*
 URxvt.scrollBar:	false
 URxvt.urgentOnBell:	true
 URxvt.internalborder:	0
 URxvt.borderless:	1
 URxvt.saveLines:	3000
-URxvt.cursorColor:	#FF0000
-URxvt.highlightColor:	#444444
-URxvt.underlinecolor:	#999999
+URxvt.cursorColor:	AliceBlue
+URxvt.highlightColor:	turquoise
+URxvt.underlinecolor:	violet
 URxvt.cutchars:		"()*,<>[]{}|'"
 URxvt.print-pipe:	cat >/tmp/xxx
 
 !-[ URxvt Transparency ]-
 URxvt.depth:		32
 URxvt.background:	rgba:0000/0000/0000/bbbb
-URxvt.foreground:	#C7C7C7
+URxvt.foreground:	LemonChiffon1
 URxvt.shading:		80
 URxvt.fadeColor:	black
 
@@ -44,30 +43,49 @@ URxvt.keysym.M-s:	perl:keyboard-select:search
 ! *background: #111111
 ! *foreground: #babdb6
 !!Black (not tango) + DarkGrey
-*color0:  #000000
-*color8:  #555753
+!*color0:  #000000
+!*color8:  #555753
 ! ! DarkRed + Red
-*color1:  #ff6565
-*color9:  #ff8d8d
+!*color1:  #ff6565
+!*color9:  #ff8d8d
 ! ! DarkGreen + Green
-*color2:  #93d44f
-*color10: #c8e7a8
+!*color2:  #93d44f
+!*color10: #c8e7a8
 ! ! DarkYellow + Yellow
-*color3:  #eab93d
-*color11: #ffc123
+!*color3:  #eab93d
+!*color11: #ffc123
 ! ! DarkBlue + Blue
-*color4:  #204a87
-*color12: #3465a4
+!*color4:  #204a87
+!*color12: #3465a4
 ! ! DarkMangenta + Mangenta
-*color5:  #ce5c00
-*color13: #f57900
+!*color5:  #ce5c00
+!*color13: #f57900
 ! !DarkCyan + Cyan (both not tango)
-*color6:  #89b6e2
-*color14: #46a4ff
+!*color6:  #89b6e2
+!*color14: #46a4ff
 ! ! LightGrey + White
-*color7:  #cccccc
-*color15: #ffffff
+!*color7:  #cccccc
+!*color15: #ffffff
 
+!Theme Two
+!*background: rgb:00/00/00
+!*foreground: rgb:7f/7f/7f
+*color0:     rgb:00/00/00
+*color1:     rgb:9e/18/28
+*color2:     rgb:ae/ce/92
+*color3:     rgb:96/8a/38
+*color4:     rgb:41/41/71
+*color5:     rgb:96/3c/59
+*color6:     rgb:41/81/79
+*color7:     rgb:be/be/be
+*color8:     rgb:66/66/66
+*color9:     rgb:cf/61/71
+*color10:    rgb:c5/f7/79
+*color11:    rgb:ff/f7/96
+*color12:    rgb:41/86/be
+*color13:    rgb:cf/9e/be
+*color14:    rgb:71/be/be
+*color15:    rgb:ff/ff/ff
 
 !! == xscreensaver == !!
 
@@ -103,4 +121,10 @@ xscreensaver.passwd.thermometer.width:       8
 ! -- datestamp format -- !
 xscreensaver.dateFormat:    %I:%M%P %a %b %d, %Y
 
-
+! xpdf -----------------------------------------------------------------------
+!
+xpdf*enableFreetype:    yes
+xpdf*antialias:         yes
+xpdf*foreground:        black
+xpdf*background:        white
+xpdf*urlCommand:        /usr/bin/uzbl-tabbed %s
