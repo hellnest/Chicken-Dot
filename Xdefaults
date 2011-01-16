@@ -26,7 +26,7 @@ URxvt.print-pipe:	cat >/tmp/xxx
 !-[ URxvt Transparency ]-
 URxvt.depth:		32
 URxvt.background:	rgba:0000/0000/0000/bbbb
-URxvt.foreground:	LemonChiffon1
+URxvt.foreground:	PaleGoldenrod
 URxvt.shading:		80
 URxvt.fadeColor:	black
 
