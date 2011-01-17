@@ -4,12 +4,14 @@
 ---	Author : Martin Lee   	---
 ---   hellnest.fuah@gmail.com	---
 -----------------------------------
+
 -- main
 import XMonad
 import System.Exit
 import System.IO
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
+
 -- actions
 import XMonad.Actions.CycleWS
 import XMonad.Actions.WindowGo
@@ -19,16 +21,19 @@ import qualified XMonad.Actions.Submap as SM
 import qualified XMonad.Actions.Search as S
 import XMonad.Actions.Search
 import XMonad.Actions.FloatKeys
+
 -- layouts
 import XMonad.Layout.Grid
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing
 import XMonad.Layout.PerWorkspace (onWorkspace)
-import XMonad.Layout.Reflect
+
 -- prompt
 import XMonad.Prompt
 import XMonad.Prompt.RunOrRaise (runOrRaisePrompt)
 import XMonad.Prompt.AppendFile (appendFilePrompt)
+import XMonad.Prompt.Shell
+import qualified XMonad.Prompt	as P
 -- hooks
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
@@ -40,20 +45,17 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Util.EZConfig
 import XMonad.Util.Run (spawnPipe, runInTerm, safeSpawn, unsafeSpawn)
 import XMonad.Util.Font
-import qualified XMonad.Prompt 		as P
-import XMonad.Prompt.Shell
-import XMonad.Prompt
 
 -- The basics {{{
 
 myTerminal      = "urxvtc"
 myFocusFollowsMouse :: Bool
-myFocusFollowsMouse  = True
+myFocusFollowsMouse  = False
 myBorderWidth   = 2
 myModMask       = mod4Mask
-myWorkspaces    = ["1:code","2:web","3:chat","4:irssi","5:doc","6:V","7:Vid","8:GI"]
-myNormalBorderColor  = "white"
-myFocusedBorderColor = "#FF0000"
+myWorkspaces    = ["Code","Web","IM","irc","Doc","v","[o]","x.x"]
+myNormalBorderColor  = "black" 
+myFocusedBorderColor = "white"
 myTXTColor 	= "#ffffff" 
 myBGColor  	= "#262626" 
 myFFGColor 	= myBGColor 
@@ -66,7 +68,8 @@ myIFGColor 	= "#8abfd0"
 myIBGColor 	= myBGColor
 mySColor   	= myTXTColor
 myIconDir 	= "/home/hellnest/.xbm/"
-myFont 		= "-*-profont-*-*-*-*-12-*-*-*-*-*-*-*"
+--myFont 		= "ubuntu:size=8"
+myFont		= "-xos4-terminus-medium-*-*-*-12-*-*-*-*-*-iso10646-*"
 
 -- }}}
 -- Dzen2 & Conky {{{
@@ -81,17 +84,17 @@ myDzenPP h = defaultPP
     , ppSep             = " | "
     , ppLayout          = dzenColor myTXTColor myBGColor .
                           (\x -> case x of
-                          "Full"            -> "^fg(" ++ myTXTColor ++ ")^i(" ++ myIconDir ++ "/full.xbm)"
-                          "Spacing 10 Grid" -> "^fg(" ++ myTXTColor ++ ")^i(" ++ myIconDir ++ "/mtall.xbm)"
-                          "Spacing 10 Tall" -> "^fg(" ++ myTXTColor ++ ")^i(" ++ myIconDir ++ "/tall.xbm)"
+                          "Full"           -> "^fg(" ++ myTXTColor ++ ")^i(" ++ myIconDir ++ "/full.xbm)"
+                          "Spacing 3 Grid" -> "^fg(" ++ myTXTColor ++ ")^i(" ++ myIconDir ++ "/grid.xbm)"
+                          "Spacing 3 Tall" -> "^fg(" ++ myTXTColor ++ ")^i(" ++ myIconDir ++ "/tall.xbm)"
                           _                 -> x
                           )
     , ppTitle           = (" " ++) . dzenColor myTXTColor myBGColor . dzenEscape
     , ppOutput          = hPutStrLn h 
     }
 
-myStatus = "dzen2 -x '0' -y '0' -h '14' -w '930' -ta 'l' -bg '" ++ myBGColor ++ "' -fn '" ++ myFont ++ "'"
-myBottom = "conky | dzen2 -x '930' -y '0' -w '438' -h '14' -bg '" ++ myBGColor ++ "' -fg '" ++ myTXTColor ++ "' -fn '" ++ myFont ++ "'"
+myStatus = "dzen2 -x '0' -y '0' -h '14' -w '1368' -ta 'l' -bg '" ++ myBGColor ++ "' -fn '" ++ myFont ++ "'"
+myBottom = "conky | dzen2 -x '0' -y '880' -h '14' -ta 'c' -bg  '" ++ myBGColor ++ "' -fg '" ++ myTXTColor ++ "' -fn '" ++ myFont ++ "'"
 
 -- XP Config
 myXPConfig = defaultXPConfig                                    
@@ -130,9 +133,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch a terminal
     [ ((modm, 				xK_Return), spawn $ XMonad.terminal conf)
  
-    -- launch dmenu
+    -- launch Application Launcher
     --, ((modm,               xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
-    , ((modm, 				xK_s 	 ), SM.submap $ searchEngineMap $ S.promptSearchBrowser myXPConfig "uzbl-tabbed")
+    , ((modm, 				xK_s 	 ), SM.submap $ searchEngineMap $ S.promptSearchBrowser myXPConfig "luakit")
     , ((modm, 				xK_r	 ), shellPrompt myXPConfig)
     , ((0,					xK_F12	 ), appendFilePrompt myXPConfig "/home/hellnest/chicken-TODO") 
     
@@ -256,28 +259,27 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- }}}
 -- Hooks & Layouts {{{
 
-myLayoutHook = onWorkspace "2:web" (full ||| grid) $ onWorkspace "3:chat" (tiled ||| grid) $ onWorkspace "4:irssi" (full) standardLayouts
+myLayoutHook = onWorkspace "2:web" (full ||| grid) $ onWorkspace "3:chat" (tiled ||| grid) $ onWorkspace "4:irssi" (full) standardL
   where
-    tiled 	= spacing 10 $ Tall nmaster delta ratio
+    tiled 	= spacing 3 $ Tall nmaster delta ratio
     nmaster 	= 1
     ratio 	= 1/2
     delta	= 3/100
-    grid 	= spacing 10 $ Grid
+    grid 	= spacing 3 $ Grid
     full 	= noBorders $ Full
-    standardLayouts = (tiled ||| grid ||| full)
-    reflectTiled = (reflectHoriz tiled)
-
+    standardL = (tiled ||| grid ||| full)
+    
 myManageHook = ( composeAll . concat $
-    [[ className =? "Gimp"          --> doShift "8:GI"
+    [[ className =? "Gimp"          --> doShift "x.x"
     , className =? "Zenity"         --> doCenterFloat
     , className =? "Xmessage"       --> doCenterFloat
     , className =? "MPlayer"        --> doCenterFloat
-    , className =? "luakit"	    --> doShift "2:web" 
-    , className =? "Minefield"      --> doShift "2:web"
-    , className =? "Chrome"         --> doShift "2:web"
-    , className =? "Pidgin"         --> doShift "3:chat"
-    , title	=? "irssi"	    --> doShift "4:irssi"
-    , className =? "MPlayer"        --> doShift "7:Vid"
+    , className =? "luakit"	    --> doShift "Web" 
+    , className =? "Minefield"      --> doShift "Web"
+    , className =? "Chrome"         --> doShift "Web"
+    , className =? "Pidgin"         --> doShift "IM"
+    , title	=? "irssi"	    --> doShift "irc"
+    , className =? "MPlayer"        --> doShift "[o]"
     , resource  =? "desktop_window" --> doIgnore 
     , resource  =? "kdesktop"       --> doIgnore]
     ])
