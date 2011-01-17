@@ -209,6 +209,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0		, 0x1008ff11 ), spawn "amixer -q set Master 2dB- && amixer -q set PCM 2dB-")
     , ((0		, 0x1008ff12 ), spawn "amixer -q set Master toggle")
 
+    -- MPC Control
+    , ((shiftMask	, xK_Right   ), unsafeSpawn "mpc next")
+    , ((shiftMask	, xK_Left    ), unsafeSpawn "mpc prev")
+    , ((shiftMask	, xK_Up      ), unsafeSpawn "mpc play")
+    , ((shiftMask	, xK_Down    ), unsafeSpawn "mpc stop")
+        
     -- brightness control
     , ((0		, 0x1008ff03 ), spawn "nvclock -S -5")
     , ((0		, 0x1008ff02 ), spawn "nvclock -S +5")
@@ -217,10 +223,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0		, xK_Print), unsafeSpawn "scrot '%d-%m-%Y-%H%M_$wx$h.png' -e 'mv $f ~/screenshot'")
 
     -- Application KeyBind
-    , ((modm .|. shiftMask, xK_u     ), spawn "uzbl-tabbed")
+    , ((modm .|. shiftMask, xK_u     ), spawn "luakit")
     , ((modm .|. shiftMask, xK_p     ), spawn "pidgin")
     , ((modm .|. shiftMask, xK_b     ), spawn "chromium-browser")
     , ((modm .|. shiftMask, xK_r     ), spawn "urxvtc -name irssi -e irssi")
+    , ((modm .|. shiftMask, xK_f     ), spawn "/home/hellnest/bin/rwpaper")
 
     ]
     ++
@@ -265,7 +272,7 @@ myManageHook = ( composeAll . concat $
     , className =? "Zenity"         --> doCenterFloat
     , className =? "Xmessage"       --> doCenterFloat
     , className =? "MPlayer"        --> doCenterFloat
-    , className =? "Uzbl-tabbed"    --> doShift "2:web" 
+    , className =? "luakit"	    --> doShift "2:web" 
     , className =? "Minefield"      --> doShift "2:web"
     , className =? "Chrome"         --> doShift "2:web"
     , className =? "Pidgin"         --> doShift "3:chat"
