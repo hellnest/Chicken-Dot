@@ -4,88 +4,81 @@ Xft.antialias:	true
 Xft.rgba:	rgb
 Xft.hinting:	true
 Xft.hintstyle:  hintslight
+Xft.autohint:	true
 
 !-[ Mice ]-
-Xcursor.theme:  Vanilla-DMZ
+Xcursor.theme:  Bluecurve
 Xcursor.size:	24
 
 !-[ URxvt General ]-
-URxvt.font:		-*-profont-*-*-*-*-12-*-*-*-*-*-*-*
-URxvt.Bold.font:	-*-profont-*-*-*-*-12-*-*-*-*-*-*-*
+URxvt.loginShell:	true
+URxvt.geometry:		90x30
+URxvt.xftAntialias:	true
+URxvt.font:		-xos4-terminus-medium-*-*-*-12-*-*-*-*-*-iso10646-*
+URxvt.font.Bold:	-xos4-terminus-bold-*-*-*-12-*-*-*-*-*-iso10646-*
 URxvt.scrollBar:	false
 URxvt.urgentOnBell:	true
 URxvt.internalborder:	0
 URxvt.borderless:	1
 URxvt.saveLines:	3000
 URxvt.cursorColor:	AliceBlue
-URxvt.highlightColor:	turquoise
+URxvt.highlightColor:	white
 URxvt.underlinecolor:	violet
 URxvt.cutchars:		"()*,<>[]{}|'"
 URxvt.print-pipe:	cat >/tmp/xxx
+URxvt*intensityStyles:  true
 
 !-[ URxvt Transparency ]-
+URxvt.dynamicColors:	on
+URxvt.transparent:	false
+URxvt.tintColor:	#403628
 URxvt.depth:		32
-URxvt.background:	rgba:0000/0000/0000/bbbb
-URxvt.foreground:	PaleGoldenrod
-URxvt.shading:		80
-URxvt.fadeColor:	black
+URxvt.background:	#1c1c1c
+URxvt.foreground:	#ccdccc
+URxvt.shading:		75
+URxvt.fading:		10%
+URxvt.fadeColor:	grey
+URxvt.inheritPixmap:	true
 
 !-[ URxvt - CLip ]-
+URxvt.perl-lib:		/usr/lib/urxvt/perl
 URxvt.perl-ext-common:	default,url-select,clipboard,keyboard-select
 URxvt.keysym.M-u:	perl:url-select:select_next
 URxvt.urlLauncher:	chromium-browser
 URxvt.underLineURLs:	true
 URxvt.keysym.M-Escape:	perl:keyboard-select:activate
 URxvt.keysym.M-s:	perl:keyboard-select:search
+URxvt.matcher.button:	1
 
-!-[ The colors 0-7 are the 'normal' colors, while 8-15 are their 'bright' counterparts]-
-! tangoesque scheme
-! *background: #111111
-! *foreground: #babdb6
-!!Black (not tango) + DarkGrey
-!*color0:  #000000
-!*color8:  #555753
-! ! DarkRed + Red
-!*color1:  #ff6565
-!*color9:  #ff8d8d
-! ! DarkGreen + Green
-!*color2:  #93d44f
-!*color10: #c8e7a8
-! ! DarkYellow + Yellow
-!*color3:  #eab93d
-!*color11: #ffc123
-! ! DarkBlue + Blue
-!*color4:  #204a87
-!*color12: #3465a4
-! ! DarkMangenta + Mangenta
-!*color5:  #ce5c00
-!*color13: #f57900
-! !DarkCyan + Cyan (both not tango)
-!*color6:  #89b6e2
-!*color14: #46a4ff
-! ! LightGrey + White
-!*color7:  #cccccc
-!*color15: #ffffff
+!-[ Xmessage ]-
+Xmessage*font:                  -*-terminus-*-*-*-*-*-*-*-*-*-*-iso8859-2
+Xmessage*background:            #303030
+Xmessage*foreground:            #909090
+Xmessage*form.*.shapeStyle:     rectangle
+Xmessage*Scrollbar.width:       0
+Xmessage*Scrollbar.borderWidth: 0
+Xmessage*Buttons:               Quit
+Xmessage*defaultButton:         Quit
 
-!Theme Two
+!Theme Seventeen
 !*background: rgb:00/00/00
-!*foreground: rgb:7f/7f/7f
-*color0:     rgb:00/00/00
-*color1:     rgb:9e/18/28
-*color2:     rgb:ae/ce/92
-*color3:     rgb:96/8a/38
-*color4:     rgb:41/41/71
-*color5:     rgb:96/3c/59
-*color6:     rgb:41/81/79
-*color7:     rgb:be/be/be
-*color8:     rgb:66/66/66
-*color9:     rgb:cf/61/71
-*color10:    rgb:c5/f7/79
-*color11:    rgb:ff/f7/96
-*color12:    rgb:41/86/be
-*color13:    rgb:cf/9e/be
-*color14:    rgb:71/be/be
-*color15:    rgb:ff/ff/ff
+!*foreground: rgb:e5/e5/e5
+color0:     rgb:00/00/00
+color1:     rgb:ff/00/00
+color2:     rgb:00/ff/00
+color3:     rgb:ff/ff/00
+color4:     rgb:00/00/ff
+color5:     rgb:ff/00/ff
+color6:     rgb:00/ff/ff
+color7:     rgb:ff/ff/ff
+color8:     rgb:ff/d3/9b
+color9:     rgb:ff/82/47
+color10:    rgb:ff/82/ab
+color11:    rgb:87/ce/fa
+color12:    rgb:ff/ff/ff
+color13:    rgb:ff/ff/ff
+color14:    rgb:ff/ff/ff
+color15:    rgb:ff/ff/ff
 
 !! == xscreensaver == !!
 
@@ -122,9 +115,58 @@ xscreensaver.passwd.thermometer.width:       8
 xscreensaver.dateFormat:    %I:%M%P %a %b %d, %Y
 
 ! xpdf -----------------------------------------------------------------------
-!
+
 xpdf*enableFreetype:    yes
 xpdf*antialias:         yes
 xpdf*foreground:        black
 xpdf*background:        white
 xpdf*urlCommand:        /usr/bin/uzbl-tabbed %s
+
+! xfontsel -------------------------------------------------------------------
+
+XFontSel*sampleText.background: TEXTBG
+XFontSel*menu*showUnselectable: false
+XFontSel*MenuButton.shadowWidth: 0
+XFontsel*Toggle*ToggleStyle: check
+XFontsel*MenuButton*Justify: left
+XFontsel*MenuButton*MenuButtonStyle: select
+xfontsel.pane.commandBox.quitButton.background: #777777
+xfontsel.pane.commandBox.quitButton.foreground: snow
+xfontsel.pane.commandBox.ownButton.background: orange3
+xfontsel.pane.commandBox.ownButton.foreground: snow
+xfontsel.pane.commandBox.countLabel.background: snow
+xfontsel.pane.viewPort.sampleText.background: #777777
+xfontsel.pane.viewPort.sampleText.foreground: snow
+xfontsel.pane.fieldBox.field0.background: #777777
+xfontsel.pane.fieldBox.field0.foreground: snow
+xfontsel.pane.fieldBox.field1.background: #777777
+xfontsel.pane.fieldBox.field1.foreground: snow
+xfontsel.pane.fieldBox.field2.background: #777777
+xfontsel.pane.fieldBox.field2.foreground: snow
+xfontsel.pane.fieldBox.field3.background: #777777
+xfontsel.pane.fieldBox.field3.foreground: snow
+xfontsel.pane.fieldBox.field4.background: #777777
+xfontsel.pane.fieldBox.field4.foreground: snow
+xfontsel.pane.fieldBox.field5.background: #777777
+xfontsel.pane.fieldBox.field5.foreground: snow
+xfontsel.pane.fieldBox.field6.background: #777777
+xfontsel.pane.fieldBox.field6.foreground: snow
+xfontsel.pane.fieldBox.field7.background: #777777
+xfontsel.pane.fieldBox.field7.foreground: snow
+xfontsel.pane.fieldBox.field8.background: #777777
+xfontsel.pane.fieldBox.field8.foreground: snow
+xfontsel.pane.fieldBox.field9.background: #777777
+xfontsel.pane.fieldBox.field9.foreground: snow
+xfontsel.pane.fieldBox.field10.background: #777777
+xfontsel.pane.fieldBox.field10.foreground: snow
+xfontsel.pane.fieldBox.field11.background: #777777
+xfontsel.pane.fieldBox.field11.foreground: snow
+xfontsel.pane.fieldBox.field12.background: #777777
+xfontsel.pane.fieldBox.field12.foreground: snow
+xfontsel.pane.fieldBox.field13.background: #777777
+xfontsel.pane.fieldBox.field13.foreground: snow
+xfontsel.pane.fieldBox*foreground: #000000
+xfontsel.pane.fieldBox.MenuButton.borderWidth: 1
+xfontsel.pane.fieldBox.MenuButton.internalHeight:1
+xfontsel.pane.fieldBox.MenuButton.internalWidth: 2
+xfontsel.pane.fieldBox.MenuButton.shapeStyle: rectangle
