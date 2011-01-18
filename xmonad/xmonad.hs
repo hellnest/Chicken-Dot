@@ -52,6 +52,7 @@ myTerminal      = "urxvtc"
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse  = False
 myBorderWidth   = 2
+myModMask :: KeyMask
 myModMask       = mod4Mask
 myWorkspaces    = ["Code","Web","IM","irc","Doc","v","[o]","x.x"]
 myNormalBorderColor  = "black" 
@@ -69,7 +70,7 @@ myIBGColor 	= myBGColor
 mySColor   	= myTXTColor
 myIconDir 	= "/home/hellnest/.xbm/"
 myFontz 	= "ubuntu:size=8"
-myFont		= "-xos4-terminus-medium-*-*-*-12-*-*-*-*-*-iso10646-*"
+myFont		= "undinaru:size=8"
 
 -- }}}
 -- Dzen2 & Conky {{{
@@ -94,7 +95,7 @@ myDzenPP h = defaultPP
     }
 
 myStatus = "dzen2 -x '0' -y '0' -h '14' -w '1368' -ta 'l' -bg '" ++ myBGColor ++ "' -fn '" ++ myFont ++ "'"
-myBottom = "conky -c ~/.conkyrc | dzen2 -x '0' -y '880' -h '14'  -bg  '" ++ myBGColor ++ "' -fg '" ++ myTXTColor ++ "' -fn '" ++ myFontz ++ "'"
+myBottom = "conky -c ~/.conkyrc | dzen2 -x '0' -y '880' -h '14'  -bg  '" ++ myBGColor ++ "' -fg '" ++ myTXTColor ++ "' -fn '" ++ myFont ++ "'"
 
 -- XP Config
 myXPConfig = defaultXPConfig                                    
@@ -134,7 +135,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm, 				xK_Return), spawn $ XMonad.terminal conf)
  
     -- launch Application Launcher
-    --, ((modm,               xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     , ((modm, 				xK_s 	 ), SM.submap $ searchEngineMap $ S.promptSearchBrowser myXPConfig "luakit")
     , ((modm, 				xK_r	 ), shellPrompt myXPConfig)
     , ((0,					xK_F12	 ), appendFilePrompt myXPConfig "/home/hellnest/chicken-TODO") 
@@ -213,10 +213,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0		, 0x1008ff12 ), spawn "amixer -q set Master toggle")
 
     -- MPC Control
-    --, ((xK_Control_L	, xK_Right   ), unsafeSpawn "mpc next")
-    --, ((xK_Control_L	, xK_Left    ), unsafeSpawn "mpc prev")
-    --, ((xK_Control_L	, xK_Up      ), unsafeSpawn "mpc play")
-    --, ((xK_Control_L	, xK_Down    ), unsafeSpawn "mpc stop")
+    , ((controlMask	, xK_Right   ), unsafeSpawn "mpc next")
+    , ((controlMask	, xK_Left    ), unsafeSpawn "mpc prev")
+    , ((controlMask	, xK_Up      ), unsafeSpawn "mpc play")
+    , ((controlMask	, xK_Down    ), unsafeSpawn "mpc stop")
         
     -- brightness control
     , ((0		, 0x1008ff03 ), spawn "nvclock -S -5")
@@ -259,7 +259,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- }}}
 -- Hooks & Layouts {{{
 
-myLayoutHook = onWorkspace "2:web" (full ||| grid) $ onWorkspace "3:chat" (tiled ||| grid) $ onWorkspace "4:irssi" (full) standardL
+myLayoutHook = onWorkspace "Web" (full ||| grid) $ onWorkspace "IM" (tiled ||| grid) $ onWorkspace "irc" (full) standardL
   where
     tiled 	= spacing 3 $ Tall nmaster delta ratio
     nmaster 	= 1

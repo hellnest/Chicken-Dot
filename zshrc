@@ -1,37 +1,57 @@
-#!/bin/zsh
+# utf-8 in the terminal, will break stuff if your term isn't utf aware
+LANG=en_US.UTF-8 
+LC_ALL=$LANG
+LC_COLLATE=C
 
 # Export
 export EDITOR="vim"
-export BROWSER="jumanji"
+export VISUAL="vim"
+export BROWSER="luakit"
 
 # Basic Configuration
 autoload -U compinit 
-autoload -U promptinit
 autoload -U colors
-autoload -U zrecompile
+autoload edit-command-line
+autoload -U zmv
 compinit
-promptinit
 colors
 
+REPORTTIME=60       # Report time statistics for progs that take more than a minute to run
+WATCH=notme         # Report any login/logout of other users
+WATCHFMT='%n %a %l from %m at %T.'
+
 # Prompt
-PROMPT="%{$fg_bold[red]%}%n%{$reset_color%} at %{$fg[magenta]%}%m %{$fg[yellow]%}%1~ %{$reset_color%}%#"
-RPROMPT="[%{$fg[yellow]%}%?%{$reset_color%}]"
+PROMPT='%{$fg[red]%}(%n)%{$reset_color%} %{$fg_bold[yellow]%}➜%{$reset_color%} %{$fg[magenta]%}%M %~ %{$reset_color%}%# '
+RPROMPT='%{$fg[white]%}%m%{$reset_color%}'
 
 # Set Option
-setopt AUTO_CD
-setopt CORRECT
-setopt AUTO_LIST
-setopt COMPLETE_IN_WORD
-setopt ALWAYS_TO_END
-setopt listtypes 
-setopt interactivecomments
-setopt correctall
+setopt                          \
+        auto_cd                 \
+        auto_pushd              \
+	append_history		\
+        chase_links             \
+        noclobber               \
+        complete_aliases        \
+        extended_glob           \
+        hist_ignore_all_dups    \
+        hist_ignore_space       \
+        ignore_eof              \
+        share_history           \
+        no_flow_control         \
+        list_types              \
+        mark_dirs               \
+        path_dirs               \
+        prompt_percent          \
+        prompt_subst            \
+        rm_star_wait
+
+# Push a command onto a stack allowing you to run another command first
+bindkey '^J' push-line
 
 # History Config
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
-setopt APPEND_HISTORY
 eval `dircolors -b`
 
 # Zstyle
@@ -46,10 +66,8 @@ zstyle ':completion:*' file-sort name
 zstyle ':completion:*' glob 1
 zstyle ':completion:*' insert-unambiguous true
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' max-errors 2
 zstyle ':completion:*' original true
-zstyle ':completion:*' prompt 'correction: %e '
 zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*' substitute 1
 
@@ -63,6 +81,7 @@ alias bb='bauerbill'
 alias gensums='[[ -f PKGBUILD ]] && makepkg -g >> PKGBUILD'
 alias md5='md5sum'
 alias a='aria2c'
+alias df='df -h'
 alias ls='ls --group-directories-first --color=auto'
 alias lsa='ls -a --group-directories-first --color=auto'
 alias irc='urxvtc -name irssi -e irssi'
@@ -87,6 +106,7 @@ alias gadd='git add'
 alias pid='pgrep'
 
 # Functions
+# Compression #
 ex() {
   if [ -f $1 ] ; then
       case $1 in
@@ -108,3 +128,5 @@ ex() {
       echo "'$1' is not a valid file!"
   fi
 }
+
+
