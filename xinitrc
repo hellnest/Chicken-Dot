@@ -10,8 +10,7 @@
 xmodmap -e "pointer = 1 0 3"
 xset +dpms +fp /usr/share/fonts/local,/usr/share/fonts/artwiz-fonts
 [[ -f ~/.Xdefaults ]] && xrdb -merge ~/.Xdefaults
-xscreensaver -no-splash &
-#xcompmgr -n -c -C -t-5 -l-5 -r4.2 -o.55 -f 2>/dev/null &
+#xscreensaver -no-splash &
 xset r rate 220 45
 setxkbmap -option terminate:ctrl_alt_bksp
 xsetroot -cursor_name left_ptr
@@ -21,14 +20,15 @@ xsetroot -cursor_name left_ptr
 ##########################
 urxvtd -q -o -f
 mpd &
+unclutter -idle 1 &
 #conky | while read -r; do xsetroot -name "$REPLY"; done &
-~/bin/randomwp &
+~/bin/rwpaper &
 ~/bin/dcomp.sh &
-#~/bin/dwm-stat &
+~/bin/hd &
 #dropboxd &
 
 ## i Hate Java ##
 #wmname LG3D
 
 #exec ck-launch-session dbus-launch dwm
-exec ck-launch-session dbus-launch xmonad
+exec ck-launch-session xmonad

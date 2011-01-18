@@ -68,7 +68,7 @@ myIFGColor 	= "#8abfd0"
 myIBGColor 	= myBGColor
 mySColor   	= myTXTColor
 myIconDir 	= "/home/hellnest/.xbm/"
---myFont 		= "ubuntu:size=8"
+myFontz 	= "ubuntu:size=8"
 myFont		= "-xos4-terminus-medium-*-*-*-12-*-*-*-*-*-iso10646-*"
 
 -- }}}
@@ -94,7 +94,7 @@ myDzenPP h = defaultPP
     }
 
 myStatus = "dzen2 -x '0' -y '0' -h '14' -w '1368' -ta 'l' -bg '" ++ myBGColor ++ "' -fn '" ++ myFont ++ "'"
-myBottom = "conky | dzen2 -x '0' -y '880' -h '14' -ta 'c' -bg  '" ++ myBGColor ++ "' -fg '" ++ myTXTColor ++ "' -fn '" ++ myFont ++ "'"
+myBottom = "conky -c ~/.conkyrc | dzen2 -x '0' -y '880' -h '14'  -bg  '" ++ myBGColor ++ "' -fg '" ++ myTXTColor ++ "' -fn '" ++ myFontz ++ "'"
 
 -- XP Config
 myXPConfig = defaultXPConfig                                    
@@ -213,10 +213,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0		, 0x1008ff12 ), spawn "amixer -q set Master toggle")
 
     -- MPC Control
-    , ((shiftMask	, xK_Right   ), unsafeSpawn "mpc next")
-    , ((shiftMask	, xK_Left    ), unsafeSpawn "mpc prev")
-    , ((shiftMask	, xK_Up      ), unsafeSpawn "mpc play")
-    , ((shiftMask	, xK_Down    ), unsafeSpawn "mpc stop")
+    --, ((xK_Control_L	, xK_Right   ), unsafeSpawn "mpc next")
+    --, ((xK_Control_L	, xK_Left    ), unsafeSpawn "mpc prev")
+    --, ((xK_Control_L	, xK_Up      ), unsafeSpawn "mpc play")
+    --, ((xK_Control_L	, xK_Down    ), unsafeSpawn "mpc stop")
         
     -- brightness control
     , ((0		, 0x1008ff03 ), spawn "nvclock -S -5")

@@ -1,4 +1,4 @@
-cowsay -f daemon $(fortune)
+##cowsay -f daemon $(fortune)##
 
 ##########################################
 ##	Chicken Project - Martin Lee	##
@@ -11,6 +11,10 @@ cowsay -f daemon $(fortune)
 ##################################
 export PATH="/usr/lib/colorgcc/bin:$PATH"
 export EDITOR="vim"
+export CC="colorgcc"
+export TERM="rxvt-unicode"
+export LANG="en_US.UTF8"
+
 complete -cf sudo
 complete -cf man
 
@@ -20,6 +24,15 @@ complete -cf man
 
 # Check for an interactive session
 [ -z "$PS1" ] && return
+
+# BASH 4 Features
+if [[ ${BASH_VERSINFO[0]} -ge 4 ]]; then
+    shopt -s globstar
+      shopt -s autocd
+    fi
+
+    shopt -s checkwinsize
+    shopt -s extglob
 
 ###########
 # HISTORY #
@@ -91,16 +104,18 @@ alias sf='screenfetch -s'
 alias hset='hsetroot -fill'
 alias kfc='killall conky'
 alias off='sudo halt'
-alias reboot='sudo reboot'
+alias reboot='sudo shutdown -r'
 alias mount='sudo mount'
 alias umount='sudo umount'
 alias usb='mount /dev/sdb /mnt/usb'
 alias fm='ranger'
 alias nano='vim'
 alias v='vim'
+alias vs='sudo vim'
 alias gcommit='git commit -m'
 alias gpush='git push origin'
 alias gadd='git add'
+alias pid='pgrep'
 
 ##########################
 ##	Compression	##
