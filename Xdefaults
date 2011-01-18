@@ -21,8 +21,6 @@ URxvt.urgentOnBell:	true
 URxvt.internalborder:	0
 URxvt.borderless:	1
 URxvt.saveLines:	3000
-URxvt.cursorColor:	AliceBlue
-URxvt.highlightColor:	white
 URxvt.underlinecolor:	violet
 URxvt.cutchars:		"()*,<>[]{}|'"
 URxvt.print-pipe:	cat >/tmp/xxx
@@ -33,8 +31,8 @@ URxvt.dynamicColors:	on
 URxvt.transparent:	false
 URxvt.tintColor:	#403628
 URxvt.depth:		32
-URxvt.background:	#1c1c1c
-URxvt.foreground:	#ccdccc
+URxvt.background:	#555753
+URxvt.foreground:	#eeeeee
 URxvt.shading:		75
 URxvt.fading:		10%
 URxvt.fadeColor:	grey
@@ -50,6 +48,26 @@ URxvt.keysym.M-Escape:	perl:keyboard-select:activate
 URxvt.keysym.M-s:	perl:keyboard-select:search
 URxvt.matcher.button:	1
 
+urxvt*color0:#555753
+urxvt*color1:#CC0000
+urxvt*color2:#6AAD2B
+urxvt*color3:#C4A000
+urxvt*color4:#3465A4
+urxvt*color5:#948696
+urxvt*color6:#06989A
+urxvt*color7:#EEEEEE
+urxvt*color8:#202020
+urxvt*color9:#EF2929
+urxvt*color10:#ABFD5B
+urxvt*color11:#FCE94F
+urxvt*color12:#ADCAE9
+urxvt*color13:#BCACBB
+urxvt*color14:#34E2E2
+urxvt*color15:#FFFFFF
+urxvt*colorBD:#FFFFFF
+urxvt*cursorColor:#83C048
+urxvt*highlightColor:#83C048
+
 !-[ Xmessage ]-
 Xmessage*font:                  -*-terminus-*-*-*-*-*-*-*-*-*-*-iso8859-2
 Xmessage*background:            #303030
@@ -59,26 +77,6 @@ Xmessage*Scrollbar.width:       0
 Xmessage*Scrollbar.borderWidth: 0
 Xmessage*Buttons:               Quit
 Xmessage*defaultButton:         Quit
-
-!Theme Seventeen
-!*background: rgb:00/00/00
-!*foreground: rgb:e5/e5/e5
-color0:     rgb:00/00/00
-color1:     rgb:ff/00/00
-color2:     rgb:00/ff/00
-color3:     rgb:ff/ff/00
-color4:     rgb:00/00/ff
-color5:     rgb:ff/00/ff
-color6:     rgb:00/ff/ff
-color7:     rgb:ff/ff/ff
-color8:     rgb:ff/d3/9b
-color9:     rgb:ff/82/47
-color10:    rgb:ff/82/ab
-color11:    rgb:87/ce/fa
-color12:    rgb:ff/ff/ff
-color13:    rgb:ff/ff/ff
-color14:    rgb:ff/ff/ff
-color15:    rgb:ff/ff/ff
 
 !! == xscreensaver == !!
 
