@@ -1,5 +1,5 @@
 ##################################################
-##Dynamic Window Manager <MOD> - Chicken Project##
+##		 Chicken Project		##
 ##		xinitrc resources		##
 ##################################################
 
@@ -20,15 +20,14 @@ xsetroot -cursor_name left_ptr
 ##########################
 urxvtd -q -o -f
 mpd &
+mpdscriblle &
 unclutter -idle 1 &
-#conky | while read -r; do xsetroot -name "$REPLY"; done &
 ~/bin/rwpaper &
 ~/bin/dcomp.sh &
 ~/bin/hd &
-#dropboxd &
+dropboxd &
 
 ## i Hate Java ##
 #wmname LG3D
 
-#exec ck-launch-session dbus-launch dwm
 exec ck-launch-session xmonad
