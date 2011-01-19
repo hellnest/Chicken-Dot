@@ -112,7 +112,7 @@ myXPConfig = defaultXPConfig
 
 --Search engines to be selected :  [google (g), wikipedia (w) , youtube (y) , maps (m), dictionary (d) , wikipedia (w), bbs (b) ,aur (r), wiki (a) , TPB (t), mininova (n), isohunt (i) ]
 --keybinding: hit mod + s + <searchengine>
-searchEngineMap method = M.fromList $
+searchEngineMap method = M.fromList 
        [ ((0, xK_g), method S.google )
        , ((0, xK_y), method S.youtube )
        , ((0, xK_m), method S.maps )
@@ -240,7 +240,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- mod-shift-[1..9], Move client to workspace N
     --
     [ ((m .|. modm, k), windows $ f i)
-        | (i, k) <- zip (myWorkspaces) [xK_1 .. xK_8]
+        | (i, k) <- zip myWorkspaces [xK_1 .. xK_8]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
     ]
 
@@ -248,28 +248,26 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 -- }}}
 -- Mouse bindings {{{
 
-myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
-    [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
-                                       >> windows W.shiftMaster))
-    , ((modm, button2), (\w -> focus w >> windows W.shiftMaster))
-    , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
-                                       >> windows W.shiftMaster))
+myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
+    [ ((modm, button1), \w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster)
+    , ((modm, button2), \w -> focus w >> windows W.shiftMaster)
+    , ((modm, button3), \w -> focus w >> mouseResizeWindow w  >> windows W.shiftMaster)
     ]
 
 -- }}}
 -- Hooks & Layouts {{{
 
-myLayoutHook = onWorkspace "Web" (full ||| grid) $ onWorkspace "IM" (tiled ||| grid) $ onWorkspace "irc" (full) standardL
+myLayoutHook = onWorkspace "Web" (full ||| grid) $ onWorkspace "IM" (tiled ||| grid) $ onWorkspace "irc" full standardL
   where
     tiled 	= spacing 3 $ Tall nmaster delta ratio
     nmaster 	= 1
     ratio 	= 1/2
     delta	= 3/100
-    grid 	= spacing 3 $ Grid
-    full 	= noBorders $ Full
-    standardL = (tiled ||| grid ||| full)
+    grid 	= spacing 3  Grid
+    full 	= noBorders  Full
+    standardL   = tiled ||| grid ||| full
     
-myManageHook = ( composeAll . concat $
+myManageHook = composeAll . concat $
     [[ className =? "Gimp"          --> doShift "x.x"
     , className =? "Zenity"         --> doCenterFloat
     , className =? "Xmessage"       --> doCenterFloat
@@ -281,8 +279,8 @@ myManageHook = ( composeAll . concat $
     , title	=? "irssi"	    --> doShift "irc"
     , className =? "MPlayer"        --> doShift "[o]"
     , resource  =? "desktop_window" --> doIgnore 
-    , resource  =? "kdesktop"       --> doIgnore]
-    ])
+    , resource  =? "kdesktop"       --> doIgnore
+    ]]
 
     where
 
@@ -309,9 +307,9 @@ main = do
         , focusedBorderColor = myFocusedBorderColor
         , keys = myKeys
         , mouseBindings = myMouseBindings
-        , layoutHook = avoidStruts $ myLayoutHook
+        , layoutHook = avoidStruts myLayoutHook
         , manageHook = manageHook defaultConfig <+> myManageHook
-        , logHook = myLogHook >> (dynamicLogWithPP $ myDzenPP dzen) >> setWMName "LG3D"
+        , logHook = myLogHook >> dynamicLogWithPP  (myDzenPP dzen) >> setWMName "LG3D"
     }
 
 -- }}}
