@@ -1,0 +1,6 @@
+clean_umount() {
+    umount /var/lock
+    umount /var/run
+}
+add_hook shutdown_postkillall clean_umount
+# vim: set ft=sh :

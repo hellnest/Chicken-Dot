@@ -3,8 +3,8 @@
 # to use it in xmobar add this
 # Run Com "sh" ["/path/to/mail.sh"] 20
 
-gmail_login="USERNAME"  
-gmail_password="PASSWORD" 
+gmail_login="hellnest.fuah"  
+gmail_password="l33hyunb1n" 
 
 dane="$(wget --secure-protocol=TLSv1 --timeout=3 -t 1 -q -O - \
 https://${gmail_login}:${gmail_password}@mail.google.com/mail/feed/atom \
