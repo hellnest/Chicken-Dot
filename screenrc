@@ -1,0 +1,51 @@
+##	GNU-SCREEN CONFIGURATION	##
+##	    Author : Martin Lee		##
+##    Email  : hellnest.fuah@gmail.com  ##
+##########################################
+
+# First Things First
+startup_message off			# Turn off annoying Startup Message
+debug off
+verbose on
+defutf8 on 				# Set UTF-8
+defencoding UTF-8
+setenv LC_CTYPE en_US.UTF-8
+setenv DISPLAY ':0'			# I'm using one display only
+defscrollback 2000			# Increase scrollback incase you got problem :P
+altscreen 0				# Fix display issue with some Editors
+term screen-256color			# Enable 256 Colors support
+nethack on				# Print Wacki Status Message
+nonblock on				# Don't block session when something goin wrong
+defnonblock 5
+defmonitor on				# Turn ON Monitoring
+shell -$SHELL  				# use the default shell
+defbce on      				# erase background with current bg color
+defflow off    				# disable Ctrl-S/Ctrl-Q "flow control"
+terminfo rxvt-unicode 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm' 
+termcapinfo rxvt-unicode ti@:te@	#enable SHIFT-PGUP / SHIFT-PGDOWN scroll
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+hardstatus off
+hardstatus alwayslastline
+vbell_msg "[[[ !! ]]]"
+vbell off
+
+# Window Setting
+bind c screen 1
+bind ^c screen 1
+bind 0 select 10                                                            
+screen 1
+
+# Key Binding
+bind ',' prev
+bind '.' next
+bind 'V' split -v
+bind 'K' kill
+bind 'W' windowlist
+bindkey -k k; quit # F10 to Quit from Screen
+
+# Screen Lists
+screen -t zsh 1
+screen -t FM 2 ranger
+screen -t IRSSI 3 irssi
+screen -t Music 4 ncmpcpp
+screen -t Identica 5 identicurse
