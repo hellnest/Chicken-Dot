@@ -5,7 +5,10 @@ total_run_times 0
 use_spacer none
 
 TEXT
-^i(.xbm/net_up_02.xbm) ${upspeed ppp0}/s ^i(.xbm/net_down_02.xbm) ${downspeed ppp0}/s \
+^fg(\#7D81FF)^i(/home/hellnest/.xbm/arch_10x10.xbm)^fg() ${kernel} \
+:: Updates : ${execpi 3000 sh /home/hellnest/bin/updates.sh} \
+:: ^i(.xbm/note.xbm) [ ${mpd_status} ${if_mpd_playing}- ${mpd_elapsed}/${mpd_length}$endif ] ^fg(\#909090)${mpd_title}^fg() by ^fg(\#909090)${mpd_artist}^fg() \
+:: ^i(.xbm/net_up_02.xbm)${upspeed ppp0}/s  ^i(.xbm/net_down_02.xbm)${downspeed ppp0}/s \
 :: ^i(.xbm/battery.xbm) ${battery_short BAT0} \
-:: ^i(.xbm/envelope.xbm) ${execi 600 sh ~/.conky/gmail.sh} ${time [%a] %d-%b \
+:: ^i(.xbm/envelope.xbm) ${time %a.%d.%b \
 :: ^i(.xbm/clock.xbm) %I:%M%P}
