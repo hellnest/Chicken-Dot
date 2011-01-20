@@ -1,3 +1,5 @@
+#include "/home/hellnest/.Xdefaults.d/warm"
+
 !-[ Font Render ]-
 Xft.dpi:	96
 Xft.antialias:	true
@@ -11,7 +13,8 @@ Xcursor.theme:  Bluecurve
 Xcursor.size:	24
 
 !-[ URxvt General ]-
-URxvt*termName: rxvt-256color
+URxvt.termName: 	rxvt-256color
+URxvt.imLocale:		en_US.UTF-8
 URxvt.loginShell:	true
 URxvt.geometry:		90x30
 URxvt.xftAntialias:	true
@@ -20,21 +23,24 @@ URxvt.boldFont: 	-*-batang-medium-*-*-*-12-*-*-*-*-*-*
 URxvt.scrollBar:	false
 URxvt.urgentOnBell:	true
 URxvt.internalborder:	0
-URxvt.borderless:	1
+URxvt.borderless:	true
 URxvt.saveLines:	3000
 URxvt.cutchars:		"()*,<>[]{}|'"
 URxvt.print-pipe:	cat >/tmp/xxx
-URxvt*intensityStyles:  true
+URxvt.intensityStyles:  true
 
 !-[ URxvt Transparency ]-
-URxvt.transparent:	false
-URxvt.tintColor:	#403628
+URxvt.transparent:	true
+URxvt.tintColor:	white
 URxvt.depth:		32
-URxvt.shading:		15
-URxvt.fading:		22
+URxvt.shading:		20
+URxvt.fading:		40
 URxvt.fadeColor:	grey
 URxvt.inheritPixmap:	true
-
+URxvt.background:	COLOUR_THEME_BG
+URxvt.foreground:	COLOUR_THEME_FG
+URxvt.underlinColor:	yellow
+URxvt.cursorColor:	white
 !-[ URxvt - Perl ]-
 URxvt.perl-lib:		/usr/lib/urxvt/perl
 URxvt.perl-ext-common:	default,url-select,clipboard,keyboard-select
@@ -46,7 +52,6 @@ URxvt.keysym.M-s:	perl:keyboard-select:search
 URxvt.matcher.button:	1
 
 !-[ Colours Scheme ]-
-#include "/home/hellnest/.Xdefaults.d/warm"
 *color0:  COLOUR_THEME_BLACK
 *color8:  COLOUR_THEME_DARK_GREY
 *color1:  COLOUR_THEME_DARK_RED 
@@ -114,7 +119,7 @@ xpdf*enableFreetype:    yes
 xpdf*antialias:         yes
 xpdf*foreground:        black
 xpdf*background:        white
-xpdf*urlCommand:        /usr/bin/uzbl-tabbed %s
+xpdf*urlCommand:        /usr/bin/chromium-browser %s
 
 ! xfontsel -------------------------------------------------------------------
 
