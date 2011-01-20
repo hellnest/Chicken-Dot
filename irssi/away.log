@@ -1,0 +1,15 @@
+--- Log opened Fri Jan 14 19:43:02 2011
+20:23 #archlinux: c8/< c=/Rebelleng8/> e=/hellnest: im using fluxbox, should i install shiki-colors from AUR?
+20:26 #archlinux: c8/< c=/Rebelleng8/> e=/hellnest: http://aur.archlinux.org/packages.php?ID=27154 and http://aur.archlinux.org/packages.php?ID=29945
+20:29 #archlinux: c8/< c=/MrElendigg8/> e=/hellnest: ^
+20:32 #xmonad: c8/< c=/MrElendigg8/> e=/hellnest: not that long ago :p
+--- Log closed Fri Jan 14 21:01:30 2011
+--- Log opened Sun Jan 16 22:26:56 2011
+22:44 #archlinux: c8/< c=/MrElendigg8/> e=/hellnest: why?
+22:48 #archlinux: c8/< c=/MrElendigg8/> e=/hellnest: stupid
+22:48 #archlinux: c8/< c=/MrElendigg8/> e=/hellnest: ftp.archlinux.org is not a "main mirror"
+22:48 #archlinux: c8/< c=/MrElendigg8/> e=/hellnest: it is actually often broken and/or more out of date than the other mirrors
+22:48 #archlinux: c8/< c=/MrElendigg8/> e=/hellnest: do not use it
+22:49 #archlinux: c8/< c=/MrElendigg8/> e=/hellnest: mirrors.kernel.org is not throteled
+22:50 #archlinux: c8/< c=/MrElendigg8/> e=/hellnest: and the only effect the order in the mirrorlist has, is that pacman will grab the syncdb from the first mirror in the list
+--- Log closed Sun Jan 16 23:58:51 2011
