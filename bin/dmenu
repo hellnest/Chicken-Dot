@@ -1,0 +1,2 @@
+#!/bin/bash
+dmenu_run -fn ubuntu-8:normal -nb "#000000" -nf "#ffffff" -sb "#00CCFF" -sf "#FFFFFF" -i
