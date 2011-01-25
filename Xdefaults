@@ -16,11 +16,13 @@ Xcursor.size:	24
 URxvt.termName: 	rxvt-256color
 URxvt.imLocale:		en_US.UTF-8
 URxvt.loginShell:	true
-URxvt.geometry:		90x30
-URxvt.xftAntialias:	true
-URxvt.font:		-*-batang-medium-*-*-*-12-*-*-*-*-*-*
-URxvt.boldFont: 	-*-batang-medium-*-*-*-12-*-*-*-*-*-*
+URxvt.geometry:		90x36
+URxvt.font:        	xft:Inconsolata:style=Medium:pixelsize=12:antialias=false
+URxvt.boldFont:    	xft:Inconsolata:style=Bold:pixelsize=12:antialias=false
+URxvt.colorBD:  	white
+URxvt.colorIT:  	green
 URxvt.scrollBar:	false
+URxvt.secondaryScroll: 	true
 URxvt.urgentOnBell:	true
 URxvt.internalborder:	0
 URxvt.borderless:	true
@@ -37,15 +39,16 @@ URxvt.shading:		20
 URxvt.fading:		40
 URxvt.fadeColor:	grey
 URxvt.inheritPixmap:	true
-URxvt.background:	COLOUR_THEME_BG
+URxvt.background:	rgba:3f00/3f00/3f00/dddd
 URxvt.foreground:	COLOUR_THEME_FG
 URxvt.underlinColor:	yellow
 URxvt.cursorColor:	white
+
 !-[ URxvt - Perl ]-
 URxvt.perl-lib:		/usr/lib/urxvt/perl
 URxvt.perl-ext-common:	default,url-select,clipboard,keyboard-select
 URxvt.keysym.M-u:	perl:url-select:select_next
-URxvt.urlLauncher:	chromium-browser
+URxvt.urlLauncher:	firefox
 URxvt.underLineURLs:	true
 URxvt.keysym.M-Escape:	perl:keyboard-select:activate
 URxvt.keysym.M-s:	perl:keyboard-select:search
