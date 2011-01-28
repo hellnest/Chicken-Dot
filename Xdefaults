@@ -1,12 +1,12 @@
-#include "/home/hellnest/.Xdefaults.d/warm"
+!#include "/home/hellnest/.Xdefaults.d/warm"
 
 !-[ Font Render ]-
 Xft.dpi:	96
-Xft.antialias:	true
+Xft.antialias:	1
 Xft.rgba:	rgb
-Xft.hinting:	true
+Xft.hinting:	1
 Xft.hintstyle:  hintslight
-Xft.autohint:	true
+Xft.autohint:	1
 
 !-[ Mice ]-
 Xcursor.theme:  Bluecurve
@@ -19,8 +19,8 @@ URxvt.loginShell:	true
 URxvt.geometry:		90x36
 URxvt.font:        	xft:Inconsolata:style=Medium:pixelsize=12:antialias=false
 URxvt.boldFont:    	xft:Inconsolata:style=Bold:pixelsize=12:antialias=false
-URxvt.colorBD:  	white
-URxvt.colorIT:  	green
+!URxvt.colorBD:  	white
+!URxvt.colorIT:  	green
 URxvt.scrollBar:	false
 URxvt.secondaryScroll: 	true
 URxvt.urgentOnBell:	true
@@ -30,19 +30,20 @@ URxvt.saveLines:	3000
 URxvt.cutchars:		"()*,<>[]{}|'"
 URxvt.print-pipe:	cat >/tmp/xxx
 URxvt.intensityStyles:  true
+URxvt.cursorColor:      #DCDCCC
 
 !-[ URxvt Transparency ]-
-URxvt.transparent:	true
-URxvt.tintColor:	white
-URxvt.depth:		32
-URxvt.shading:		20
-URxvt.fading:		40
-URxvt.fadeColor:	grey
-URxvt.inheritPixmap:	true
-URxvt.background:	rgba:3f00/3f00/3f00/dddd
-URxvt.foreground:	COLOUR_THEME_FG
-URxvt.underlinColor:	yellow
-URxvt.cursorColor:	white
+!URxvt.transparent:	true
+!URxvt.tintColor:	white
+!URxvt.depth:		32
+!URxvt.shading:		10
+!URxvt.fading:		10
+!URxvt.fadeColor:	grey
+!URxvt.inheritPixmap:	true
+!URxvt.background:	rgba:3f00/3f00/3f00/dddd
+!URxvt.foreground:	COLOUR_THEME_FG
+!URxvt.underlinColor:	yellow
+!URxvt.cursorColor:	white
 
 !-[ URxvt - Perl ]-
 URxvt.perl-lib:		/usr/lib/urxvt/perl
@@ -55,22 +56,51 @@ URxvt.keysym.M-s:	perl:keyboard-select:search
 URxvt.matcher.button:	1
 
 !-[ Colours Scheme ]-
-*color0:  COLOUR_THEME_BLACK
-*color8:  COLOUR_THEME_DARK_GREY
-*color1:  COLOUR_THEME_DARK_RED 
-*color9:  COLOUR_THEME_LIGHT_RED
-*color2:  COLOUR_THEME_DARK_GREEN 
-*color10: COLOUR_THEME_LIGHT_GREEN
-*color3:  COLOUR_THEME_DARK_YELLOW 
-*color11: COLOUR_THEME_LIGHT_YELLOW
-*color4:  COLOUR_THEME_DARK_BLUE
-*color12: COLOUR_THEME_LIGHT_BLUE
-*color5:  COLOUR_THEME_DARK_MAGENTA
-*color13: COLOUR_THEME_LIGHT_MAGENTA 
-*color6:  COLOUR_THEME_DARK_CYAN
-*color14: COLOUR_THEME_LIGHT_CYAN
-*color7:  COLOUR_THEME_LIGHT_GREY
-*color15: COLOUR_THEME_WHITE
+!*color0:  COLOUR_THEME_BLACK
+!*color8:  COLOUR_THEME_DARK_GREY
+!*color1:  COLOUR_THEME_DARK_RED 
+!*color9:  COLOUR_THEME_LIGHT_RED
+!*color2:  COLOUR_THEME_DARK_GREEN 
+!*color10: COLOUR_THEME_LIGHT_GREEN
+!*color3:  COLOUR_THEME_DARK_YELLOW 
+!*color11: COLOUR_THEME_LIGHT_YELLOW
+!*color4:  COLOUR_THEME_DARK_BLUE
+!*color12: COLOUR_THEME_LIGHT_BLUE
+!*color5:  COLOUR_THEME_DARK_MAGENTA
+!*color13: COLOUR_THEME_LIGHT_MAGENTA 
+!*color6:  COLOUR_THEME_DARK_CYAN
+!*color14: COLOUR_THEME_LIGHT_CYAN
+!*color7:  COLOUR_THEME_LIGHT_GREY
+!*color15: COLOUR_THEME_WHITE
+
+! Zenburn color-scheme
+urxvt*background:  #3f3f3f
+urxvt*foreground:  #dcdccc
+! black + red
+!urxvt*color0:     #3f3f3f
+urxvt*color0:      #1E2320
+urxvt*color1:      #705050
+! green + yellow
+urxvt*color2:      #60b48a
+urxvt*color3:      #dfaf8f
+! blue + purple
+urxvt*color4:      #506070
+urxvt*color5:      #dc8cc3
+! cyan + white
+urxvt*color6:      #8cd0d3
+urxvt*color7:      #dcdccc
+! bright-black + bright-red
+urxvt*color8:      #709080
+urxvt*color9:      #dca3a3
+! bright-green + bright-yellow
+urxvt*color10:     #c3bf9f
+urxvt*color11:     #f0dfaf
+! bright-blue + bright-purple
+urxvt*color12:     #94bff3
+urxvt*color13:     #ec93d3
+! bright-cyan + bright-white
+urxvt*color14:     #93e0e3
+urxvt*color15:     #ffffff
 
 !-[ Xmessage ]-
 Xmessage*font:                  -*-terminus-*-*-*-*-*-*-*-*-*-*-iso8859-2
