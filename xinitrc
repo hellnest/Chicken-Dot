@@ -1,33 +1,29 @@
-##################################################
-##		 Chicken Project		##
-##		xinitrc resources		##
-##################################################
+#!/bin/zsh
 
-
-##########################
-##	X-Tweak		##
-##########################
+eval `dbus-launch --sh-syntax --exit-with-session`
+eval "$(gpg-agent --daemon --log-file /home/flo/gpglog)"
 xmodmap -e "pointer = 1 0 3"
-xset +dpms +fp /usr/share/fonts/local,/usr/share/fonts/artwiz-fonts
-[[ -f ~/.Xdefaults ]] && xrdb -merge ~/.Xdefaults
-#xscreensaver -no-splash &
+xset +dpms +fp /usr/share/fonts/local
+xrdb -merge $HOME/.Xdefaults &
+xset s off &
 xset r rate 220 45
 setxkbmap -option terminate:ctrl_alt_bksp
-xsetroot -cursor_name left_ptr
+xsetroot -d :0 -cursor_name left_ptr
 
-##########################
-##	Autostart	##
-##########################
+## Daemon Array
 urxvtd -q -o -f
 mpd &
-mpdscriblle &
+bitlbee &
 unclutter -idle 1 &
-~/bin/rwpaper &
-~/bin/dcomp.sh &
+(sleep 1 && ck-launch-session nm-applet) &
+#~/bin/rwpaper &
+#(sleep 2 && ~/bin/dcomp.sh) &
 ~/bin/hd &
-dropboxd &
+(sleep 5 && conky -c ~/conky/ctime) &
+##(sleep 5 && dropboxd) &
 
 ## i Hate Java ##
-#wmname LG3D
+wmname LG3D
 
-exec ck-launch-session xmonad
+exec awesome
+#xmonad
