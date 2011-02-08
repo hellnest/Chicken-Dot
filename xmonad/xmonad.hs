@@ -54,7 +54,7 @@ myFocusFollowsMouse  = False
 myBorderWidth   = 2
 myModMask :: KeyMask
 myModMask       = mod4Mask
-myWorkspaces    = ["Code","Web","IM","irc","Doc","v","[o]","x.x"]
+myWorkspaces    = ["Code","Web","Pad","Box"]
 myNormalBorderColor  = "black" 
 myFocusedBorderColor = "white"
 myTXTColor 	= "#ffffff" 
@@ -68,9 +68,8 @@ myUBGColor 	= "#d91e0d"
 myIFGColor 	= "#8abfd0"
 myIBGColor 	= myBGColor
 mySColor   	= myTXTColor
-myIconDir 	= "/home/hellnest/.xbm/"
-myFontz 	= "ubuntu:size=8"
-myFont		= "undinaru:size=8"
+myIconDir 	= "/home/lee/.xmonad/xbm/"
+myFont		= "Inconsolata:size=8"
 
 -- }}}
 -- Dzen2 & Conky {{{
@@ -85,22 +84,23 @@ myDzenPP h = defaultPP
     , ppSep             = " | "
     , ppLayout          = dzenColor myTXTColor myBGColor .
                           (\x -> case x of
-                          "Full"           -> "^fg(" ++ myTXTColor ++ ")^i(" ++ myIconDir ++ "/full.xbm)"
-                          "Spacing 3 Grid" -> "^fg(" ++ myTXTColor ++ ")^i(" ++ myIconDir ++ "/grid.xbm)"
-                          "Spacing 3 Tall" -> "^fg(" ++ myTXTColor ++ ")^i(" ++ myIconDir ++ "/tall.xbm)"
+                          "Full"           -> "^fg(" ++ myTXTColor ++ ")^i(" ++ myIconDir ++ "/xbm8x8/full.xbm)"
+                          "Spacing 3 Grid" -> "^fg(" ++ myTXTColor ++ ")^i(" ++ myIconDir ++ "/xbm8x8/grid.xbm)"
+                          "Spacing 3 Tall" -> "^fg(" ++ myTXTColor ++ ")^i(" ++ myIconDir ++ "/xbm8x8/tall.xbm)"
                           _                 -> x
                           )
     , ppTitle           = (" " ++) . dzenColor myTXTColor myBGColor . dzenEscape
     , ppOutput          = hPutStrLn h 
     }
 
-myStatus = "dzen2 -x '0' -y '0' -h '14' -w '1368' -ta 'l' -bg '" ++ myBGColor ++ "' -fn '" ++ myFont ++ "'"
-myBottom = "conky -c ~/.conkyrc | dzen2 -x '0' -y '880' -h '14'  -bg  '" ++ myBGColor ++ "' -fg '" ++ myTXTColor ++ "' -fn '" ++ myFont ++ "'"
+myStatus = "dzen2 -x '0' -y '0' -h '14' -w '1150' -ta 'l' -bg '" ++ myBGColor ++ "' -fn '" ++ myFont ++ "'"
+myTray	 = "/home/lee/.xmonad/tray.zsh | dzen2 -x '1150' -y '0' -ta 'r' -h '14' -bg '" ++ myBGColor ++ "' -fn '" ++ myFont ++ "'" 
+-- myBottom = "conky -c ~/.conkyrc | dzen2 -x '0' -y '880' -h '14'  -bg  '" ++ myBGColor ++ "' -fg '" ++ myTXTColor ++ "' -fn '" ++ myFont ++ "'"
 
 -- XP Config
 myXPConfig = defaultXPConfig                                    
     { 
-	 font			= "-*-profont-*-*-*-*-10-*-*-*-*-*-*-*" 
+	 font			= "-*-dina-medium-r-*-*-13-*-*-*-*-*-*-*" 
 	,fgColor 		= myTXTColor
 	,bgColor 		= myBGColor
 	,promptBorderWidth  	= 0
@@ -213,10 +213,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0		, 0x1008ff12 ), spawn "amixer -q set Master toggle")
 
     -- MPC Control
-    , ((controlMask	, xK_Right   ), unsafeSpawn "mpc next")
-    , ((controlMask	, xK_Left    ), unsafeSpawn "mpc prev")
-    , ((controlMask	, xK_Up      ), unsafeSpawn "mpc play")
-    , ((controlMask	, xK_Down    ), unsafeSpawn "mpc stop")
+    --, ((controlMask	, xK_Right   ), unsafeSpawn "mpc next")
+    --, ((controlMask	, xK_Left    ), unsafeSpawn "mpc prev")
+    --, ((controlMask	, xK_Up      ), unsafeSpawn "mpc play")
+    --, ((controlMask	, xK_Down    ), unsafeSpawn "mpc stop")
         
     -- brightness control
     , ((0		, 0x1008ff03 ), spawn "nvclock -S -5")
@@ -227,10 +227,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Application KeyBind
     , ((modm .|. shiftMask, xK_u     ), spawn "luakit")
-    , ((modm .|. shiftMask, xK_p     ), spawn "pidgin")
     , ((modm .|. shiftMask, xK_b     ), spawn "chromium-browser")
-    , ((modm .|. shiftMask, xK_r     ), spawn "urxvtc -name irssi -e irssi")
-    , ((modm .|. shiftMask, xK_f     ), spawn "/home/hellnest/bin/rwpaper")
+    , ((modm .|. shiftMask, xK_t	), spawn "urxvtc -e tmux")
+    , ((modm .|. shiftMask, xK_f     ), spawn "/home/lee/bin/rwpaper")
 
     ]
     ++
@@ -257,7 +256,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
 -- }}}
 -- Hooks & Layouts {{{
 
-myLayoutHook = onWorkspace "Web" (full ||| grid) $ onWorkspace "IM" (tiled ||| grid) $ onWorkspace "irc" full standardL
+myLayoutHook = onWorkspace "Web" (full ||| grid) $ onWorkspace "Pad" (tiled ||| grid) $ onWorkspace "Box" full standardL
   where
     tiled 	= spacing 3 $ Tall nmaster delta ratio
     nmaster 	= 1
@@ -265,7 +264,7 @@ myLayoutHook = onWorkspace "Web" (full ||| grid) $ onWorkspace "IM" (tiled ||| g
     delta	= 3/100
     grid 	= spacing 3  Grid
     full 	= noBorders  Full
-    standardL   = tiled ||| grid ||| full
+    standardL   = full ||| tiled ||| grid
     
 myManageHook = composeAll . concat $
     [[ className =? "Gimp"          --> doShift "x.x"
@@ -276,8 +275,7 @@ myManageHook = composeAll . concat $
     , className =? "Minefield"      --> doShift "Web"
     , className =? "Chrome"         --> doShift "Web"
     , className =? "Pidgin"         --> doShift "IM"
-    , title	=? "irssi"	    --> doShift "irc"
-    , className =? "MPlayer"        --> doShift "[o]"
+    , className =? "MPlayer"        --> doShift "Box"
     , resource  =? "desktop_window" --> doIgnore 
     , resource  =? "kdesktop"       --> doIgnore
     ]]
@@ -295,7 +293,8 @@ myLogHook = return ()
 main :: IO ()
 main = do
     dzen <- spawnPipe myStatus
-    bottom <- spawnPipe myBottom
+    tray <- spawnPipe myTray
+--    bottom <- spawnPipe myBottom
     xmonad $ ewmh $ withUrgencyHook NoUrgencyHook defaultConfig {
        -- Basic Configuration
         terminal = myTerminal
