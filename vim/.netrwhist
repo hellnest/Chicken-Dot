@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/home/lee/.scrotwm'
+let g:netrw_dirhist_2='/home/lee/uni/live-scripts/profiles/chakra-minimal-testing-i686'
+let g:netrw_dirhist_3='/home/lee/.vim'
+let g:netrw_dirhist_4='/home/lee/larch/larch0/profiles/acer-one/rootoverlay'

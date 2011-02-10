@@ -30,14 +30,18 @@ set number
 set colorcolumn=80
 
 " statusline
-set statusline=%<%f\ %y%h%m%r\ PWD:%{getcwd()}%=%-14.(%l,%c%V%)\ %P
+set statusline=%{fugitive#statusline()}%<%f\ %y%h%m%r\ PWD:%{getcwd()}%=%-14.(%l,%c%V%)\ %P}
 set laststatus=2
 
 " colours
-"set t_Co=256
 set background=dark
 
-" -[ FileTypes ]-
+"et 256 colors if we can
+if $TERM =~ "-256color"
+      set t_Co=256
+         colorscheme zenburn 
+endif
+
 " mail
 autocmd FileType mail,human set formatoptions+=t textwidth=72
 
@@ -70,3 +74,6 @@ let Tlist_Use_Right_Window = 1
 let Tlist_Compart_Format = 1
 let Tlist_Show_Menu = 1
 let Tlist_Exit_OnlyWindow = 1
+
+" Disable autocompletion
+au FileType * setl fo-=cro
