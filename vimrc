@@ -39,7 +39,16 @@ set background=dark
 "et 256 colors if we can
 if $TERM =~ "-256color"
       set t_Co=256
-         colorscheme zenburn 
+         colorscheme digerati
+endif
+
+
+" use folding if we can
+if has ('folding')
+  set foldenable
+  set foldmethod=marker
+  set foldmarker={{{,}}}
+  set foldcolumn=0
 endif
 
 " mail
