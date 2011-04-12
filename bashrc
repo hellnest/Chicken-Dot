@@ -1,143 +1,86 @@
-##cowsay -f daemon $(fortune)##
+# Bash Configuration
+# Author    : Martin Lee
+# License   : As it is
 
-##########################################
-##	Chicken Project - Martin Lee	##
-##					##
-##		Bash.RC			##
-##########################################
-##########################################
-##################################
-##	External Config		##
-##################################
-export PATH="/usr/lib/colorgcc/bin:$PATH"
-export EDITOR="vim"
-export CC="colorgcc"
-export TERM="rxvt-unicode"
-export LANG="en_US.UTF8"
-
+cat /etc/issue
+# Check for interactive Session
+[[ $- != *i* ]] && return
+# Fallback PS1
+PS1='[\u@\h \W]\$ '
+ 
 complete -cf sudo
 complete -cf man
 
-[[ -z $BASH_COMPLETION && -r /etc/bash_completion ]] && . /etc/bash_completion
+# Shell opts
+shopt -s cdspell dirspell globstar histverify no_empty_cmd_completion
+
+# Ext Config
 [[ -r ~/.dircolors && -x /bin/dircolors ]] && eval $(dircolors -b ~/.dircolors)
+[[ -r ~/.bash_aliases ]] && . ~/.bash_aliases
+[[ -z $BASH_COMPLETION && -r /etc/bash_completion ]] && . /etc/bash_completion
 
+# Tmux Color
+[ -n "$TMUX" ] && export TERM=screen-256color
 
-# Check for an interactive session
-[ -z "$PS1" ] && return
-
-# BASH 4 Features
+# bash 4 features
 if [[ ${BASH_VERSINFO[0]} -ge 4 ]]; then
-    shopt -s globstar
-      shopt -s autocd
-    fi
+  shopt -s globstar
+  shopt -s autocd
+fi
 
-    shopt -s checkwinsize
-    shopt -s extglob
+shopt -s checkwinsize
+shopt -s extglob
 
-###########
-# HISTORY #
-###########
+set -o notify           # notify background job
+ulimit -S -c 0          # Disable core dumps
+stty -ctlecho           # turn off control character echoing
+setterm -regtabs 2      # set tab width of 4 ( TTY Only )
+_expand() { return 0; } # disable tidle expansion
+
+# more for less
+LESS=-R # use -X to avoid sending terminal initialization
+LESS_TERMCAP_mb=$'\e[01;31m'
+LESS_TERMCAP_md=$'\e[01;31m'
+LESS_TERMCAP_me=$'\e[0m'
+LESS_TERMCAP_se=$'\e[0m'
+LESS_TERMCAP_so=$'\e[01;44;33m'
+LESS_TERMCAP_ue=$'\e[0m'
+LESS_TERMCAP_us=$'\e[01;32m'
+export ${!LESS@}
+
+# history
 HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd*"
+HISTCONTROL="ignoreboth:erasedups"
 HISTSIZE=1000
 HISTFILESIZE=2000
-HISTCONTROL="ignoreboth:erasedups"
+export ${!HIST@}
 
-##########
-##COLORS##
-##########
-TXTBLK='\[\e[0;30m\]' # Black - Regular
-TXTRED='\[\e[0;31m\]' # Red
-TXTGRN='\[\e[0;32m\]' # Green
-TXTYLW='\[\e[0;33m\]' # Yellow
-TXTBLU='\[\e[0;34m\]' # Blue
-TXTPUR='\[\e[0;35m\]' # Purple
-TXTCYN='\[\e[0;36m\]' # Cyan
-TXTWHT='\[\e[0;37m\]' # White
-BLDBLK='\[\e[1;30m\]' # Black - Bold
-BLDRED='\[\e[1;31m\]' # Red
-BLDGRN='\[\e[1;32m\]' # Green
-BLDYLW='\[\e[1;33m\]' # Yellow
-BLDBLU='\[\e[1;34m\]' # Blue
-BLDPUR='\[\e[1;35m\]' # Purple
-BLDCYN='\[\e[1;36m\]' # Cyan
-BLDWHT='\[\e[1;37m\]' # White
-UNDBLK='\[\e[4;30m\]' # Black - Underline
-UNDRED='\[\e[4;31m\]' # Red
-UNDGRN='\[\e[4;32m\]' # Green
-UNDYLW='\[\e[4;33m\]' # Yellow
-UNDBLU='\[\e[4;34m\]' # Blue
-UNDPUR='\[\e[4;35m\]' # Purple
-UNDCYN='\[\e[4;36m\]' # Cyan
-UNDWHT='\[\e[4;37m\]' # White
-BAKBLK='\[\e[40m\]'   # Black - Background
-BAKRED='\[\e[41m\]'   # Red
-BAKGRN='\[\e[42m\]'   # Green
-BAKYLW='\[\e[43m\]'   # Yellow
-BAKBLU='\[\e[44m\]'   # Blue
-BAKPUR='\[\e[45m\]'   # Purple
-BAKCYN='\[\e[46m\]'   # Cyan
-BAKWHT='\[\e[47m\]'   # White
-TXTRST='\[\e[0m\]'    # Text Reset
+# chroot prompt
+if [[ -f $HOME/.chroot ]]; then
+   root_name=$(< $HOME/.chroot)
+   root_name=${root_name:-NONAME}
+   PS1='[\u@\h${root_name} \w]\$ '
+   return
+fi
 
-PS1="┌─( $TXTGRN\u$TXTRST ) - ( $TXTPUR\d$TXTRST | $TXTPUR\@$TXTRST ) - ( $TXTCYN\w$TXTRST )\n└─$BLDRED command $TXTRST> "
-
-
-##################
-##	ALIAS	##
-##################
-alias fcache='fc-cache -vfs'
-alias ..='cd ..'
-alias pacman='sudo pacman-color'
-alias clyde='sudo clyde'
-alias orphan='pacman -Qdt'
-alias bb='bauerbill'
-alias gensums='[[ -f PKGBUILD ]] && makepkg -g >> PKGBUILD'
-alias md5='md5sum'
-alias a='aria2c'
-alias ls='ls --group-directories-first --color=auto'
-alias lsa='ls -a --group-directories-first --color=auto'
-alias irc='urxvtc -name irssi -e irssi'
-alias idt='urxvtc -name identica -e identicurse'
-alias grep='grep --color'
-alias nmr='sudo /etc/rc.d/networkmanager restart'
-alias sf='screenfetch -s'
-alias hset='hsetroot -fill'
-alias kfc='killall conky'
-alias off='sudo halt'
-alias reboot='sudo shutdown -r'
-alias mount='sudo mount'
-alias umount='sudo umount'
-alias usb='mount /dev/sdb /mnt/usb'
-alias fm='ranger'
-alias nano='vim'
-alias v='vim'
-alias vs='sudo vim'
-alias gcommit='git commit -m'
-alias gpush='git push origin'
-alias gadd='git add'
-alias pid='pgrep'
-
-##########################
-##	Compression	##
-##########################
-ex() {
-  if [ -f $1 ] ; then
-      case $1 in
-          *.tar.bz2)   tar xvjf $1    ;;
-          *.tar.gz)    tar xvzf $1    ;;
-          *.bz2)       bunzip2 $1     ;;
-          *.rar)       rar x $1       ;;
-          *.gz)        gunzip $1      ;;
-          *.tar)       tar xvf $1     ;;
-          *.tbz2)      tar xvjf $1    ;;
-          *.tgz)       tar xvzf $1    ;;
-          *.tar.xz)    tar Jxf $1     ;; 
-          *.zip)       unzip $1       ;;
-          *.Z)         uncompress $1  ;;
-          *.7z)        7z x $1        ;;
-          *)           echo "don't know how to extract '$1'..." ;;
-      esac
-  else
-      echo "'$1' is not a valid file!"
-  fi
+prompt_command () {
+    local rts=$?
+    local w=$(echo "${PWD/#$HOME/~}" | sed 's/.*\/\(.*\/.*\/.*\)$/\1/') # pwd max depth 3
+# pwd max length L, prefix shortened pwd with m
+    local L=30 m='<'
+    [ ${#w} -gt $L ] && { local n=$((${#w} - $L + ${#m}))
+    local w="\[\033[0;32m\]${m}\[\033[0;37m\]${w:$n}\[\033[0m\]" ; } \
+    ||   local w="\[\033[0;37m\]${w}\[\033[0m\]"
+# different colors for different return status
+    [ $rts -eq 0 ] && \
+    local p="\[\033[1;30m\]>\[\033[0;32m\]>\[\033[1;32m\]>\[\033[m\]" || \
+    local p="\[\033[1;30m\]>\[\033[0;31m\]>\[\033[1;31m\]>\[\033[m\]"
+    PS1="${w} ${p}\$(__git_ps1 ' \[\e[0;32m\]%s\[\e[0m\]') " 
+    PS4='+$BASH_SOURCE:$LINENO:$FUNCNAME: ' 
 }
+
+PROMPT_COMMAND=prompt_command
+GIT_PS1_SHOWDIRTYSTATE=yes
+
+eval $( keychain --eval id_rsa )
+# vim:fenc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=sh:
