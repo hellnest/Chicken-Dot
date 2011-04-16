@@ -1,5 +1,3 @@
-!#include "/home/hellnest/.Xdefaults.d/warm"
-
 !-[ Font Render ]-
 Xft.dpi:	96
 Xft.antialias:	1
@@ -7,40 +5,41 @@ Xft.rgba:	rgb
 Xft.hinting:	1
 Xft.hintstyle:  hintslight
 Xft.autohint:	1
+Xft.lcdfilter: lcddefault
 
 !-[ Mice ]-
-Xcursor.theme:  Bluecurve
+Xcursor.theme:  Vanilla-DMZ
 Xcursor.size:	24
 
 !-[ URxvt General ]-
-URxvt.termName: 	rxvt-256color
-URxvt.imLocale:		en_US.UTF-8
-URxvt.loginShell:	true
-URxvt.geometry:		90x36
-URxvt.font:        	xft:Inconsolata:style=Medium:pixelsize=12:antialias=false
-URxvt.boldFont:    	xft:Inconsolata:style=Bold:pixelsize=12:antialias=false
-!URxvt.colorBD:  	white
-!URxvt.colorIT:  	green
-URxvt.scrollBar:	false
+URxvt.termName: 	      rxvt-256color
+URxvt.imLocale:		      en_US.UTF-8
+URxvt.loginShell:	      true
+URxvt.geometry:		      90x36
+URxvt.buffered:         true
+URxvt.font:             xft:Monospace:style=Regular:pixelsize=10:antialias=false
+!URxvt.boldFont:         xft:Monaco:style=Bold:pixelsize=10:antialias=false
+URxvt.cursorBlink:      true
+URxvt.scrollBar:	      false
 URxvt.secondaryScroll: 	true
-URxvt.urgentOnBell:	true
-URxvt.internalborder:	0
-URxvt.borderless:	true
-URxvt.saveLines:	3000
-URxvt.cutchars:		"()*,<>[]{}|'"
-URxvt.print-pipe:	cat >/tmp/xxx
+URxvt.urgentOnBell:	    true
+URxvt.internalborder:	  0
+URxvt.borderless:	      true
+URxvt.saveLines:	      3000
+URxvt.cutchars:		      "()*,<>[]{}|'"
+URxvt.print-pipe:	      cat >/tmp/xxx
 URxvt.intensityStyles:  true
 URxvt.cursorColor:      #DCDCCC
 
 !-[ URxvt Transparency ]-
-!URxvt.transparent:	true
-!URxvt.tintColor:	white
-!URxvt.depth:		32
-!URxvt.shading:		10
-!URxvt.fading:		10
-!URxvt.fadeColor:	grey
-!URxvt.inheritPixmap:	true
-!URxvt.background:	rgba:3f00/3f00/3f00/dddd
+URxvt.transparent:	true
+URxvt.tintColor:	white
+URxvt.depth:		32
+URxvt.shading:		10
+URxvt.fading:		10
+URxvt.fadeColor:	grey
+URxvt.inheritPixmap:	true
+URxvt.background:	rgba:3f00/3f00/3f00/dddd
 !URxvt.foreground:	COLOUR_THEME_FG
 !URxvt.underlinColor:	yellow
 !URxvt.cursorColor:	white
@@ -74,131 +73,64 @@ URxvt.matcher.button:	1
 !*color15: COLOUR_THEME_WHITE
 
 ! Zenburn color-scheme
-urxvt*background:  #3f3f3f
-urxvt*foreground:  #dcdccc
+!urxvt*background:  #3f3f3f
+!urxvt*foreground:  #dcdccc
 ! black + red
 !urxvt*color0:     #3f3f3f
-urxvt*color0:      #1E2320
-urxvt*color1:      #705050
+!urxvt*color0:      #1E2320
+!urxvt*color1:      #705050
 ! green + yellow
-urxvt*color2:      #60b48a
-urxvt*color3:      #dfaf8f
+!urxvt*color2:      #60b48a
+!urxvt*color3:      #dfaf8f
 ! blue + purple
-urxvt*color4:      #506070
-urxvt*color5:      #dc8cc3
+!urxvt*color4:      #506070
+!urxvt*color5:      #dc8cc3
 ! cyan + white
-urxvt*color6:      #8cd0d3
-urxvt*color7:      #dcdccc
+!urxvt*color6:      #8cd0d3
+!urxvt*color7:      #dcdccc
 ! bright-black + bright-red
-urxvt*color8:      #709080
-urxvt*color9:      #dca3a3
+!urxvt*color8:      #709080
+!urxvt*color9:      #dca3a3
 ! bright-green + bright-yellow
-urxvt*color10:     #c3bf9f
-urxvt*color11:     #f0dfaf
+!urxvt*color10:     #c3bf9f
+!urxvt*color11:     #f0dfaf
 ! bright-blue + bright-purple
-urxvt*color12:     #94bff3
-urxvt*color13:     #ec93d3
+!urxvt*color12:     #94bff3
+!urxvt*color13:     #ec93d3
 ! bright-cyan + bright-white
-urxvt*color14:     #93e0e3
-urxvt*color15:     #ffffff
+!urxvt*color14:     #93e0e3
+!urxvt*color15:     #ffffff
 
-!-[ Xmessage ]-
-Xmessage*font:                  -*-terminus-*-*-*-*-*-*-*-*-*-*-iso8859-2
-Xmessage*background:            #303030
-Xmessage*foreground:            #909090
-Xmessage*form.*.shapeStyle:     rectangle
-Xmessage*Scrollbar.width:       0
-Xmessage*Scrollbar.borderWidth: 0
-Xmessage*Buttons:               Quit
-Xmessage*defaultButton:         Quit
+!This is Digeraty Schemes?
+*foreground: #DDEEDD
+*background: #202020
+!black
+*color0: #1C1C1C
+*color8: #4d4d4d
+!red
+*color1: #D81860
+*color9: #F00060
+!green
+*color2: #B7CE42
+*color10: #BDE077
+!yellow
+*color3: #FEA63C
+*color11: #ffa32c
+!blue
+*color4: #66AABB
+*color12: #509ec6
+!magenta
+*color5: #B7416E
+*color13: #BB4466
+!cyan
+*color6: #5E7175
+*color14: #526164
+!white
+*color7: #DDEEDD
+*color15: #EFEFEF
 
-!! == xscreensaver == !!
-
-! -- font settings -- !
-xscreensaver.Dialog.headingFont:xft:envy code r:medium:pixelsize=12
-xscreensaver.Dialog.bodyFont:xft::envy code r:medium:pixelsize=12
-xscreensaver.Dialog.labelFont:xft:envy code r:medium:pixelsize=12
-xscreensaver.Dialog.unameFont:xft:envy code r:medium:pixelsize=12
-xscreensaver.Dialog.buttonFont:xft:envy code r:medium:pixelsize=12
-xscreensaver.Dialog.dateFont:xft:envy code r:medium:pixelsize=12
-xscreensaver.passwd.passwdFont::xft:envy code r:medium:pixelsize=12
-
-! -- general dialog box -- !
-xscreensaver.Dialog.foreground:         #CCCCCC
-xscreensaver.Dialog.background:         #191717
-xscreensaver.Dialog.topShadowColor:     #434343
-xscreensaver.Dialog.bottomShadowColor:  #424242
-xscreensaver.Dialog.Button.foreground:  #CCCCCC
-xscreensaver.Dialog.Button.background:  #191717
-
-! -- username/password input box and date text colour -- !
-xscreensaver.Dialog.text.foreground:    #333333
-xscreensaver.Dialog.text.background:    #999999
-xscreensaver.Dialog.internalBorderWidth:24
-xscreensaver.Dialog.borderWidth:        20
-xscreensaver.Dialog.shadowThickness:    2
-
-! -- timeout bar -- !
-xscreensaver.passwd.thermometer.foreground:  #CCCCCC
-xscreensaver.passwd.thermometer.background:  #999999
-xscreensaver.passwd.thermometer.width:       8
-
-! -- datestamp format -- !
-xscreensaver.dateFormat:    %I:%M%P %a %b %d, %Y
-
-! xpdf -----------------------------------------------------------------------
-
-xpdf*enableFreetype:    yes
-xpdf*antialias:         yes
-xpdf*foreground:        black
-xpdf*background:        white
-xpdf*urlCommand:        /usr/bin/chromium-browser %s
-
-! xfontsel -------------------------------------------------------------------
-
-XFontSel*sampleText.background: TEXTBG
-XFontSel*menu*showUnselectable: false
-XFontSel*MenuButton.shadowWidth: 0
-XFontsel*Toggle*ToggleStyle: check
-XFontsel*MenuButton*Justify: left
-XFontsel*MenuButton*MenuButtonStyle: select
-xfontsel.pane.commandBox.quitButton.background: #777777
-xfontsel.pane.commandBox.quitButton.foreground: snow
-xfontsel.pane.commandBox.ownButton.background: orange3
-xfontsel.pane.commandBox.ownButton.foreground: snow
-xfontsel.pane.commandBox.countLabel.background: snow
-xfontsel.pane.viewPort.sampleText.background: #777777
-xfontsel.pane.viewPort.sampleText.foreground: snow
-xfontsel.pane.fieldBox.field0.background: #777777
-xfontsel.pane.fieldBox.field0.foreground: snow
-xfontsel.pane.fieldBox.field1.background: #777777
-xfontsel.pane.fieldBox.field1.foreground: snow
-xfontsel.pane.fieldBox.field2.background: #777777
-xfontsel.pane.fieldBox.field2.foreground: snow
-xfontsel.pane.fieldBox.field3.background: #777777
-xfontsel.pane.fieldBox.field3.foreground: snow
-xfontsel.pane.fieldBox.field4.background: #777777
-xfontsel.pane.fieldBox.field4.foreground: snow
-xfontsel.pane.fieldBox.field5.background: #777777
-xfontsel.pane.fieldBox.field5.foreground: snow
-xfontsel.pane.fieldBox.field6.background: #777777
-xfontsel.pane.fieldBox.field6.foreground: snow
-xfontsel.pane.fieldBox.field7.background: #777777
-xfontsel.pane.fieldBox.field7.foreground: snow
-xfontsel.pane.fieldBox.field8.background: #777777
-xfontsel.pane.fieldBox.field8.foreground: snow
-xfontsel.pane.fieldBox.field9.background: #777777
-xfontsel.pane.fieldBox.field9.foreground: snow
-xfontsel.pane.fieldBox.field10.background: #777777
-xfontsel.pane.fieldBox.field10.foreground: snow
-xfontsel.pane.fieldBox.field11.background: #777777
-xfontsel.pane.fieldBox.field11.foreground: snow
-xfontsel.pane.fieldBox.field12.background: #777777
-xfontsel.pane.fieldBox.field12.foreground: snow
-xfontsel.pane.fieldBox.field13.background: #777777
-xfontsel.pane.fieldBox.field13.foreground: snow
-xfontsel.pane.fieldBox*foreground: #000000
-xfontsel.pane.fieldBox.MenuButton.borderWidth: 1
-xfontsel.pane.fieldBox.MenuButton.internalHeight:1
-xfontsel.pane.fieldBox.MenuButton.internalWidth: 2
-xfontsel.pane.fieldBox.MenuButton.shapeStyle: rectangle
+!-[ Xautolock ]-
+xautolock.time:         5
+xautolock.corner:       000+
+xautolock.cornerdelay:  3
+xautolock.locker:       slock
