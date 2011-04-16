@@ -2,7 +2,6 @@
 # Author    : Martin Lee
 # License   : As it is
 
-cat /etc/issue
 # Check for interactive Session
 [[ $- != *i* ]] && return
 # Fallback PS1
