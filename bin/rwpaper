@@ -8,7 +8,7 @@
 #   wallpaper folder are ones that will work as wallpapers
 ###
 
-wallpaperdir="/sandbox/wallpaper"
+wallpaperdir="/home/lee/wallpaper"
 setpaper="/usr/bin/feh --bg-scale"
 finder="/usr/bin/find" 
 simulate=0
