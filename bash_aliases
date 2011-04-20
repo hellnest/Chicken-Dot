@@ -1,11 +1,14 @@
 #!/bin/bash
 
 # Alias
+alias s='sudo'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias pacman='sudo pacman'
+alias pacoptimize='sudo pacman-optimize'
 alias ifconfig='sudo ifconfig'
+alias iwconfig='sudo iwconfig'
 alias mount='sudo mount'
 alias umount='sudo umount'
 alias ls='ls --group-directories-first --color'
@@ -21,7 +24,8 @@ alias v='vim'
 alias vs='sudo vim'
 alias gcm='git commit -m'
 alias gca='git commit -a'
-alias gp='git push origin'
+alias gp='git push'
+alias gl='git pull'
 alias gadd='git add'
 alias pid='pgrep'
 alias df='df -h'
@@ -73,6 +77,11 @@ cwd() {
 
 maketpkg() {
   makepkg --config /home/lee/terralinux/script/makepkg.terra -rsc [[ -f PKGBUILD ]] && rm -rf *.xz
+}
+
+ghremote() {
+  mkdir -p $2 && cd $2 && git init
+  git remote add origin git@github.com:$1/$2.git
 }
 
 # vim: syn=sh ft=sh et
