@@ -1,0 +1,31 @@
+#!/bin/bash
+#Simple shell to copy from ABS tree
+
+ABSTREE=$HOME/abs
+
+echo -n "What software do you want? "
+read absname
+
+result=$(find $ABSTREE -name $absname)
+
+for i in $result; do
+    echo -n "$i, is this what you want? [y/n] "
+    read opt
+    if [ $opt = "y" ]; then
+    echo -n "Copy to... "
+        
+        read buildpath
+        
+        relative=${i#$ABSTREE}
+        build=$buildpath${relative%$absname}
+        
+        set -e
+        mkdir -p $build || { echo "Failed when creating dir"; exit 1; }
+        cp -r $i $build || { echo "Failed when Copying $absname";exit 1; }
+        set +e
+
+        echo "$i Successfully copied to $build"
+        exit 0 
+    fi
+done
+exit 1
