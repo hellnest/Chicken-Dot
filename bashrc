@@ -5,7 +5,7 @@
 # Check for interactive Session
 [[ $- != *i* ]] && return
 # Fallback PS1
-PS1='[\u@\h \W]\$ '
+PS1='[\W]\$ '
  
 complete -cf sudo
 complete -cf man
@@ -82,4 +82,5 @@ PROMPT_COMMAND=prompt_command
 GIT_PS1_SHOWDIRTYSTATE=yes
 
 eval $( keychain --eval id_rsa )
+source /etc/profile
 # vim:fenc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=sh:
