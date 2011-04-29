@@ -79,15 +79,15 @@ cwd() {
 }
 
 maketpkg() {
-  makepkg --config /home/lee/terralinux/script/makepkg.terra -rsc [[ -f PKGBUILD ]] && rm -rf *.xz
+  makepkg --config /home/lee/terralinux/script/makepkg.terra -rsc [[ -f PKGBUILD ]] && rm -rf *.pkg.*
 }
 
 mkchrootpkg() {
- sudo makechrootpkg -cr /build-sys/chroot/ && cp -rv /build-sys/chroot/lee/pkgdest/*.xz ~/build-pkg/ || return 0
+ sudo makechrootpkg -cr /build-sys/chroot/ && cp -rv /build-sys/chroot/lee/pkgdest/*.pkg.* ~/build-pkg/ || return 0
 }
 
 mkchrootpkgi() {
- sudo makechrootpkg -cr /build-sys/chroot/ -- -i && cp -rv /build-sys/chroot/lee/pkgdest/*.xz ~/build-pkg/ || return 0
+ sudo makechrootpkg -cr /build-sys/chroot/ -- -i && cp -rv /build-sys/chroot/lee/pkgdest/*.pkg.* ~/build-pkg/ || return 0
 }
 
 
