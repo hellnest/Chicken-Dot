@@ -35,11 +35,9 @@ alias free='free -m'
 alias gensums='[[ -f PKGBUILD ]] && makepkg -g >> PKGBUILD'
 alias mkchpkg='sudo makechrootpkg -c -r'
 alias tmux='tmux attach'
+alias tree='tree -CA'
 alias xp='xprop | grep "WM_WINDOW_ROLE\|WM_CLASS" && echo "WM_CLASS(STRING) = \"NAME\", \"CLASS\""'
 alias :q='exit'
-
-# SSH
-alias terra='ssh hellnest@ssh.supremecenter300.com'
 
 # Functions
 ex() {
@@ -82,17 +80,8 @@ maketpkg() {
   makepkg --config /home/lee/terralinux/script/makepkg.terra -rsc [[ -f PKGBUILD ]] && rm -rf *.pkg.*
 }
 
-mkchrootpkg() {
- sudo makechrootpkg -cr /build-sys/chroot/ && cp -rv /build-sys/chroot/lee/pkgdest/*.pkg.* ~/build-pkg/ || return 0
-}
-
-mkchrootpkgi() {
- sudo makechrootpkg -cr /build-sys/chroot/ -- -i && cp -rv /build-sys/chroot/lee/pkgdest/*.pkg.* ~/build-pkg/ || return 0
-}
-
-
 build-system() {
-  sudo mkarchroot -f -C /build-sys/chroot/pacman.chroot -M /build-sys/chroot/makepkg.chroot /build-sys/chroot/root $1 || return 0
+  sudo mkarchroot -f -u -C ~/terralinux/repository/build/pacman.chroot -M ~/terralinux/repository/build/makepkg.chroot ~/terralinux/repository/build/root $1 || return 0
 }
 
 ghremote() {
@@ -100,7 +89,7 @@ ghremote() {
   git remote add origin git@github.com:$1/$2.git
 }
 
-unwork() {
+unsvn() {
   if [[ -z $1 ]]; then
 echo "USAGE: unwork <dirname>"
     return 1
@@ -108,13 +97,13 @@ echo "USAGE: unwork <dirname>"
 
 if [[ -d $1 ]]; then
 local count
-    read count < <(find "$1" -type d -name '.git' -printf 'foo\n' -exec rm -rf {} + | wc -l)
+    read count < <(find "$1" -type d -name '.svn' -printf 'foo\n' -exec rm -rf {} + | wc -l)
     if [[ $? != 0 ]]; then
 echo "Error occurred. Nothing done." >&2
     elif [[ $count = 0 ]]; then
 echo "Nothing done."
     else
-echo "SUCCESS. Directory is no longer a working copy ($count .gits removed)."
+echo "SUCCESS. Directory is no longer a working copy ($count .svn removed)."
     fi
 else
 echo "ERROR: $1 is not a directory"
@@ -151,6 +140,49 @@ start() {
 
 restart() {
   sudo /etc/rc.d/$1 restart
+}
+
+# GIT Functions
+function git_info() {
+    if [ -n "$(git symbolic-ref HEAD 2> /dev/null)" ]; then
+        # print informations
+        echo "git repo overview"
+        echo "-----------------"
+        echo
+
+        # print all remotes and thier details
+        for remote in $(git remote show); do
+echo $remote:
+            git remote show $remote
+            echo
+done
+
+        # print status of working repo
+        echo "status:"
+        if [ -n "$(git status -s 2> /dev/null)" ]; then
+git status -s
+        else
+echo "working directory is clean"
+        fi
+
+        # print at least 5 last log entries
+        echo
+echo "log:"
+        git log -5 --oneline
+        echo
+
+else
+echo "you're currently not in a git repository"
+
+    fi
+}
+
+translate(){
+if [[ -z $1 ]]; then
+echo "USAGE: translate <phrase> <source-language> <output-language>"
+    return 1
+fi 
+  wget -qO- "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=$1&langpair=$2|${3:-en}" | sed 's/.*"translatedText":"\([^"]*\)".*}/\1\n/'; 
 }
 
 # vim: syn=sh ft=sh et
