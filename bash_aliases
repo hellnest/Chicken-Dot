@@ -6,17 +6,19 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias ds='find $(pwd -P) -maxdepth 1 -type d -exec du -sh {} + 2>/dev/null | sort -h'
-alias pacman='sudo pacman-color'
+alias pacman='sudo pacman'
 alias pactree='pactree -c'
 alias pacoptimize='sudo pacman-optimize'
 alias ifconfig='sudo ifconfig'
 alias iwconfig='sudo iwconfig'
 alias mount='sudo mount'
 alias umount='sudo umount'
-alias ls='ls --group-directories-first --color'
+#alias ls='ls --group-directories-first --color'
+alias ls='ls++'
 alias la='ls -a --color=auto'
 alias ll='ls -hl --group-directories-first --color'
 alias lla='ls -hla --group-direcotires-first --color'
+alias md5='md5sum'
 alias grep='grep --color'
 alias diff='colordiff'
 alias reboot='sudo shutdown -r now'
@@ -30,6 +32,7 @@ alias gp='git push'
 alias gl='git pull'
 alias gadd='git add'
 alias pid='pgrep'
+alias 'ps?'='ps ax | grep '
 alias df='df -h'
 alias free='free -m'
 alias gensums='[[ -f PKGBUILD ]] && makepkg -g >> PKGBUILD'
@@ -183,6 +186,24 @@ echo "USAGE: translate <phrase> <source-language> <output-language>"
     return 1
 fi 
   wget -qO- "http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=$1&langpair=$2|${3:-en}" | sed 's/.*"translatedText":"\([^"]*\)".*}/\1\n/'; 
+}
+
+gmail(){
+if [[ -z $1 ]]; then
+echo "USAGE: gmail <user> <pass>"
+    return 1
+fi
+curl -u $1:$2 --silent "https://mail.google.com/mail/feed/atom" | tr -d '\n' | awk -F '<entry>' '{for (i=2; i<=NF; i++) {print $i}}' | sed -n "s/<title>\(.*\)<\/title.*name>\(.*\)<\/name>.*/\2 - \1/p"
+}
+
+aget() {
+  for pkg; do
+if curl -s --compressed "https://aur.archlinux.org/packages/$pkg/$pkg.tar.gz" | tar xz 2>/dev/null; then
+echo ":: downloaded $pkg"
+    else
+echo ":: $pkg not found"
+    fi
+done
 }
 
 # vim: syn=sh ft=sh et
