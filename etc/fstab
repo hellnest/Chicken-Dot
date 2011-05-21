@@ -1,0 +1,12 @@
+# 
+# /etc/fstab: static file system information
+#
+# <file system>        <dir>         <type>    <options>          <dump> <pass>
+devpts                 /dev/pts      devpts    defaults            0      0
+shm                    /dev/shm      tmpfs     nodev,nosuid        0      0
+/dev/sda2 swap swap defaults 0 0
+/dev/sda3 / ext4 defaults,relatime,data=ordered 0 1
+/dev/sda5 /home ext4 defaults,relatime,data=ordered,comment=systemd.automount 0 1
+/dev/sda6 /wind fuseblk defaults,comment=systemd.automount 0 0
+/dev/sda7 /unix	ext4 defaults,relatime,data=ordered,comment=systemd.automount 0 1
+/dev/sda8 /chroot ext4 defaults,relatime,data=ordered,comment=systemd.automount 0 1
