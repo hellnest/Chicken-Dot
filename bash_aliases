@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Alias
-alias s='sudo'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -13,17 +12,15 @@ alias ifconfig='sudo ifconfig'
 alias iwconfig='sudo iwconfig'
 alias mount='sudo mount'
 alias umount='sudo umount'
-#alias ls='ls --group-directories-first --color'
-alias ls='ls++'
+alias ls='ls --group-directories-first --color'
 alias la='ls -a --color=auto'
 alias ll='ls -hl --group-directories-first --color'
 alias lla='ls -hla --group-direcotires-first --color'
 alias md5='md5sum'
 alias grep='grep --color'
 alias diff='colordiff'
-alias reboot='sudo shutdown -r now'
-alias refsck='sudo shutdown -rF now'
-alias off='sudo shutdown -h now'
+alias reboot='sudo systemctl reboot'
+alias off='sudo systemctl poweroff'
 alias v='vim'
 alias vp='vim PKGBUILD'
 alias vs='sudo vim'
@@ -49,7 +46,7 @@ ex() {
     *.tar.@(bz2|gz|xz))  tar xvf $1     ;;
     *.@(tar|tbz2|tgz))   tar xvf $1     ;;
     *.bz2)               bunzip2 $1     ;;
-    *.rar)               unrar x $1     ;;
+    *.rar)               unrar X $1     ;;
     *.gz)                gunzip $1      ;;
     *.lzma)              unxz $1        ;;
     *.rpm)               bsdtar xf $1   ;;
@@ -145,6 +142,17 @@ restart() {
   sudo /etc/rc.d/$1 restart
 }
 
+sdstatus() {
+  local -a services
+
+  for serv; do
+    [[ $serv = *.@(service|socket|path|target) ]] || serv+='.service'
+    services+=("$serv")
+  done
+
+systemctl status "${services[@]}"
+}
+
 # GIT Functions
 function git_info() {
     if [ -n "$(git symbolic-ref HEAD 2> /dev/null)" ]; then
@@ -204,6 +212,20 @@ echo ":: downloaded $pkg"
 echo ":: $pkg not found"
     fi
 done
+}
+
+man2pdf() {
+  local manpage out
+
+  [[ $1 ]] || { echo "usage: man2pdf <manpage>"; return 1; }>&2
+
+  if manpage=$(man -w "$1"); then
+out=/home/lee/man/$1.pdf
+    [[ -e $out ]] || man -t $1 | ps2pdf - > $out
+    [[ -e $out ]] && xo $out
+  else
+echo "ERROR: manpage \"$1\" not found."
+  fi
 }
 
 # vim: syn=sh ft=sh et
