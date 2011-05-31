@@ -1,0 +1,8 @@
+#!/bin/sh
+systemctl restart dnsmasq.service
+systemctl restart iptables.service
+ifconfig wlan0 down
+iwconfig wlan0 mode ad-hoc
+iwconfig wlan0 essid terralinux
+ifconfig wlan0 192.168.11.1 up     
+iptab-setup.sh
