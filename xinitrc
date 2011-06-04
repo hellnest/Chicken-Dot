@@ -1,13 +1,9 @@
-#!/bin/sh
+#!/bin/bash
+# D-Bus
+if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
+   eval "$(dbus-launch --sh-syntax --exit-with-session)"
+fi
 
-xmodmap -e "pointer = 1 0 3" &
-xrdb -merge $HOME/.Xdefaults &
-xset r rate 220 45 &
-setxkbmap -option terminate:ctrl_alt_bksp &
-xsetroot -d :0 -cursor_name left_ptr &
-urxvtd -q -o -f &
-autocutsel -s PRIMARY &                     
-unclutter -idle 1 &
-~/bin/rwpaper &
+[[ -f ~/.Xdefaults ]] && xrdb -merge ~/.Xdefaults
 
-exec ck-launch-session subtle
+exec ck-launch-session dbus-launch subtle
