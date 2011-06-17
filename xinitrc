@@ -1,5 +1,5 @@
 #!/bin/bash
-LAUNCH=ck-launch-session dbus-launch
+START=ck-launch-session dbus-launch
 DEFAULT=startfluxbox
 
 if which dbus-launch >/dev/null && test -z "$DBUS_SESSION_BUS_ADDRESS"; then
