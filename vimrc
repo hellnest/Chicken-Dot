@@ -1,58 +1,87 @@
-" -[ behaviour ]-
-" general
-set nocompatible
-set nowrap
-syntax on
-filetype plugin indent on
+" Another .vimrc
+" Suckless
+" Author : Martin Lee
+
+set nocompatible " You must set this first :)
+
+" General
+set autoread
+set backspace=indent,eol,start
 set nobackup
 set nowritebackup
 set noswapfile
+set nowrap
 set bs=2
-
-" search
-set nohls
+set completeopt=longest,menuone
+set expandtab
+set history=50
+set hlsearch
+set ignorecase
 set incsearch
+set number
+set ruler
+set scrolloff=4
+set shiftwidth=2
+set showcmd
 set showmatch
-
-" identing
-set autoindent
+set showmode
+set colorcolumn=80
+set shell=/bin/bash
+set smartcase
 set smartindent
-
-" command mode
+set smarttab
+set tabstop=2
+set title
+set virtualedit=all
 set wildmenu
 set wildmode=list:longest,full
 
-" -[ Look ]-
-" general
-set showcmd
-set showmode
-set number
-set colorcolumn=80
+filetype plugin indent on
+syntax on
 
-" statusline
-set statusline=%{fugitive#statusline()}%<%f\ %y%h%m%r\ PWD:%{getcwd()}%=%-14.(%l,%c%V%)\ %P}
-set laststatus=2
-
-" colours
-set background=dark
-
-"et 256 colors if we can
-if $TERM =~ "-256color"
-      set t_Co=256
-         colorscheme digerati
+" set the window title in screen
+if $STY != ""
+  set t_ts=k
+  set t_fs=\
 endif
 
+" utf-8
+if has("multi_byte")
+  if &termencoding == ""
+    let &termencoding = &encoding
+  endif
+  set encoding=utf-8
+  setglobal fileencoding=utf-8
+  set fileencodings=ucs-bom,utf-8,latin1
+endif
 
-" use folding if we can
+" fold
 if has ('folding')
-  set foldenable
-  set foldmethod=marker
-  set foldmarker={{{,}}}
-  set foldcolumn=0
+	set foldenable
+	set foldmethod=marker
+	set foldmarker={{{,}}}
+	set foldcolumn=0
 endif
 
-" mail
-autocmd FileType mail,human set formatoptions+=t textwidth=72
+" Terminal
+if &t_Co >= 256
+     colorscheme digerati
+endif                     
+
+if &t_Co > 2
+        " switch syntax highlighting on, when the terminal has colors
+   syntax on
+endif
+
+" GUI
+if has("gui_running")
+  set guifont=Consolas\ 9
+  set antialias
+  set background=dark
+  colorscheme railcast
+  set selectmode=mouse,key,cmd
+  nnoremap <silent> <F2> :set nu!<cr> " Toggle line numbers
+endif
 
 " Python stuff
 autocmd FileType python let python_highlight_all = 1
@@ -66,23 +95,43 @@ autocmd FileType PKGBUILD set expandtab shiftwidth=2 softtabstop=4
 " sh stuff
 autocmd FileType sh set expandtab shiftwidth=2 softtabstop=4
 
-" LaTeX
-autocmd Filetype tex,latex set grepprg=grep\ -nH\ $
-autocmd Filetype tex,latex let g:tex_flavor = "latex"
+" autocommands
+au BufWritePost ~/.Xresources !xrdb ~/.Xresources
 
-" -[ Mappings ]-
-" taglist
-nnoremap <silent> <F8> :TlistToggle<CR>
-inoremap <silent> <F8> <esc>:TlistToggle<CR>a
-nnoremap <silent> <F9> :TlistUpdate<CR>
-inoremap <silent> <F9> <esc>:TlistUpdate<CR>a
+au BufRead * call SetStatusLine()
+au BufReadPost * call RestoreCursorPos()
+au BufWinEnter * call OpenFoldOnRestore()
 
-" -[ Plugins and Scripts ]-
-" taglist
-let Tlist_Use_Right_Window = 1
-let Tlist_Compart_Format = 1
-let Tlist_Show_Menu = 1
-let Tlist_Exit_OnlyWindow = 1
+au BufEnter * let &titlestring = "vim: " . substitute(expand("%:p"), $HOME, "~", '')
+au BufEnter * let &titleold = substitute(getcwd(), $HOME, "~", '')
 
-" Disable autocompletion
-au FileType * setl fo-=cro
+function! RestoreCursorPos()
+  if expand("<afile>:p:h") !=? $TEMP
+    if line("'\"") > 1 && line("'\"") <= line("$")
+      let line_num = line("'\"")
+      let b:doopenfold = 1
+      if (foldlevel(line_num) > foldlevel(line_num - 1))
+        let line_num = line_num - 1
+        let b:doopenfold = 2
+      endif
+      execute line_num
+    endif
+  endif
+endfunction
+
+function! OpenFoldOnRestore()
+  if exists("b:doopenfold")
+    execute "normal zv"
+    if(b:doopenfold > 1)
+      execute "+".1
+    endif
+    unlet b:doopenfold
+  endif
+endfunction
+
+function! SetStatusLine()
+  let l:s1="%3.3n\\ %f\\ %h%m%r%w"
+  let l:s2="[%{strlen(&filetype)?&filetype:'?'},\\ %{&encoding},\\ %{&fileformat}]\\ %{fugitive#statusline()}"
+  let l:s3="%=\\ 0x%-8B\\ \\ %-14.(%l,%c%V%)\\ %<%P"
+  execute "set statusline=" . l:s1 . l:s2 . l:s3
+endfunction
