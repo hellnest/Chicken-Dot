@@ -6,7 +6,7 @@
 [[ $- != *i* ]] && return
 # Fallback PS1
 PS1='[\W]\$ '
- 
+
 complete -cf sudo
 complete -cf man
 
@@ -18,7 +18,7 @@ if [[ -f "$HOME/.lscolors" ]] && [[ $(tput colors) == "256" ]]; then
   eval $( dircolors -b $HOME/.lscolors )
 fi
 
-# Ext Config
+# source alias & completion
 [[ -r ~/.bash_aliases ]] && . ~/.bash_aliases
 [[ -z $BASH_COMPLETION && -r /etc/bash_completion ]] && . /etc/bash_completion
 
@@ -352,7 +352,7 @@ marker="$GREEN"
 marker="$RED"
     fi
 marker="${marker}\$${RESET}"
-    PS1="${PS1} → \n\n${marker} "
+    PS1="${PS1} ●→ \n\n${marker} "
 }
 PROMPT_COMMAND=__git_prompt
 

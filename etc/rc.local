@@ -1,0 +1,7 @@
+#!/bin/bash
+#
+# /etc/rc.local: Local multi-user startup script.
+#
+
+# http://forums.gentoo.org/viewtopic-t-877539.html
+echo 200 > /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor

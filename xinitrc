@@ -1,5 +1,6 @@
 #!/bin/bash
-#xinitrc configuration
+# xinitrc configuration
+# Martin Lee (c) 2011
 #{{{ Env And Variable
 LOG="$HOME/.Xlog"
 LAUNCH=dbus-launch
@@ -29,6 +30,7 @@ urxvtd -q -o -f & # Run Rxvt Daemon
 xset r rate 220 45 & # Make you Type faster 
 xsetroot -cursor_name left_ptr & # Set rodent themes :)
 xset s off -dpms & 
+xset fp+ /usr/share/fonts/local
 #}}}
 
 #{{{ Window Manager
@@ -39,7 +41,7 @@ case "$1" in
     ;;
   debug)        exec valgrind -v "$1"
     ;;
-  *)            exec $LAUNCH $DEFAULT       
+  *)            exec $LAUNCH $DEFAULT 2> $LOG       
     ;;
 esac
 #}}}
