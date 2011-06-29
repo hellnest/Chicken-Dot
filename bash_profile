@@ -1,7 +1,6 @@
 # Sane locale
-export LANG="en_US-UTF8"
-export LC=$LANG
-export LC_COLLATE=C
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.utf8
 
 
 # Daily Stuff
@@ -33,6 +32,7 @@ export XAUTHORITY="$HOME/.Xauthority"
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
 #Start Login
-if [[ -z $DISPLAY && $(tty) = /dev/tty1 ]]; then
-  exec xinit
-fi
+#if [[ -z $DISPLAY && $(tty) = /dev/tty1 ]]; then
+#  exec xinit
+#fi
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

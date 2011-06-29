@@ -358,4 +358,11 @@ PROMPT_COMMAND=__git_prompt
 
 eval $( keychain --eval id_rsa )
 
+# Load RVM, It's ruby time
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"    
+[[ -r "$HOME/.rvm/scripts/completion" ]] && . "$HOME/.rvm/scripts/completion"
+
+# Tmuxinator
+[[ -s "$HOME/.tmuxinator/scripts/tmuxinator" ]] && source "$HOME/.tmuxinator/scripts/tmuxinator"
+
 # vim:fenc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=sh:
