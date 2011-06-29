@@ -65,7 +65,7 @@ endif
 
 " Terminal
 if &t_Co >= 256
-     colorscheme digerati
+     colorscheme neverland-darker
 endif                     
 
 if &t_Co > 2
@@ -75,12 +75,15 @@ endif
 
 " GUI
 if has("gui_running")
-  set guifont=Consolas\ 9
+  set guifont=LucidaConsole\ 8
   set antialias
   set background=dark
-  colorscheme railcast
+  colorscheme neverland-darker
   set selectmode=mouse,key,cmd
+  set guioptions-=m
+  set guioptions-=r
   nnoremap <silent> <F2> :set nu!<cr> " Toggle line numbers
+  nnoremap <silent> <F1> :if &go=~#'T'<Bar>set go-=T<Bar>else<Bar>set go+=T<Bar>endif<CR>
 endif
 
 " Python stuff
